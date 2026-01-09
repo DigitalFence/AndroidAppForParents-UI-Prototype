@@ -188,11 +188,8 @@ const FamilyHandlers = {
         document.getElementById('requests-modal').classList.remove('active');
     },
 
-    /**
-     * Join an existing family
-     */
     joinFamily() {
-        NotificationManager.show('Join family feature coming soon!', 'info');
+        window.location.href = 'join-family.html';
     },
 
     /**

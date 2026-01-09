@@ -374,3 +374,27 @@ input:checked+.slider:before {
 .fab-add .material-symbols-outlined {
     font-size: 24px;
 }
+/* Icon Button (Delete) */
+.icon-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--color-text-tertiary);
+    margin-left: 8px;
+}
+
+.icon-btn:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+}
+
+.icon-btn .material-symbols-outlined {
+    font-size: 20px;
+}

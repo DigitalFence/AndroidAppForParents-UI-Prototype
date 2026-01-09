@@ -1,5 +1,6 @@
-// Category Data Configuration
-const categoriesData = {
+// Category Data Configuration with Age Appropriate flags
+// Default data - used if no localStorage data exists
+const defaultCategoriesData = {
     'education': {
         name: 'Education',
         icon: 'school',
@@ -7,10 +8,10 @@ const categoriesData = {
         limitEnabled: false,
         limitMinutes: 60,
         apps: [
-            { name: 'Duolingo', icon: 'assets/app-icons/duolingo.png', allowed: true },
-            { name: 'Khan Academy', icon: 'assets/app-icons/khan.png', allowed: true },
-            { name: 'Wikipedia', icon: 'assets/app-icons/wikipedia.png', allowed: true },
-            { name: 'Google Classroom', icon: 'assets/app-icons/classroom.png', allowed: true }
+            { id: 'app-duolingo', name: 'Duolingo', icon: 'assets/app-icons/duolingo.png', allowed: true, ageAppropriate: true, category: 'education' },
+            { id: 'app-khan', name: 'Khan Academy', icon: 'assets/app-icons/khan.png', allowed: true, ageAppropriate: true, category: 'education' },
+            { id: 'app-wikipedia', name: 'Wikipedia', icon: 'assets/app-icons/wikipedia.png', allowed: true, ageAppropriate: true, category: 'education' },
+            { id: 'app-google-classroom', name: 'Google Classroom', icon: 'assets/app-icons/classroom.png', allowed: true, ageAppropriate: true, category: 'education' }
         ]
     },
     'entertainment': {
@@ -20,10 +21,10 @@ const categoriesData = {
         limitEnabled: true,
         limitMinutes: 60,
         apps: [
-            { name: 'YouTube', icon: 'assets/app-icons/youtube.png', allowed: true },
-            { name: 'Netflix', icon: 'assets/app-icons/netflix.png', allowed: true },
-            { name: 'Disney+', icon: 'assets/app-icons/disney.png', allowed: true },
-            { name: 'Spotify', icon: 'assets/app-icons/spotify.png', allowed: true }
+            { id: 'app-youtube', name: 'YouTube', icon: 'assets/app-icons/youtube.png', allowed: true, ageAppropriate: true, category: 'entertainment' },
+            { id: 'app-netflix', name: 'Netflix', icon: 'assets/app-icons/netflix.png', allowed: true, ageAppropriate: true, category: 'entertainment' },
+            { id: 'app-disney', name: 'Disney+', icon: 'assets/app-icons/disney.png', allowed: true, ageAppropriate: true, category: 'entertainment' },
+            { id: 'app-spotify', name: 'Spotify', icon: 'assets/app-icons/spotify.png', allowed: true, ageAppropriate: true, category: 'entertainment' }
         ]
     },
     'gaming': {
@@ -33,11 +34,11 @@ const categoriesData = {
         limitEnabled: true,
         limitMinutes: 30,
         apps: [
-            { name: 'Roblox', icon: 'assets/app-icons/roblox.png', allowed: true },
-            { name: 'Minecraft', icon: 'assets/app-icons/minecraft.png', allowed: true },
-            { name: 'Among Us', icon: 'assets/app-icons/amongus.png', allowed: true },
-            { name: 'Subway Surfers', icon: 'assets/app-icons/subway.png', allowed: true },
-            { name: 'Clash Royale', icon: 'assets/app-icons/clash.png', allowed: false } // Blocked example
+            { id: 'app-roblox', name: 'Roblox', icon: 'assets/app-icons/roblox.png', allowed: true, ageAppropriate: false, category: 'gaming' },
+            { id: 'app-minecraft', name: 'Minecraft', icon: 'assets/app-icons/minecraft.png', allowed: true, ageAppropriate: true, category: 'gaming' },
+            { id: 'app-amongus', name: 'Among Us', icon: 'assets/app-icons/amongus.png', allowed: true, ageAppropriate: true, category: 'gaming' },
+            { id: 'app-subway', name: 'Subway Surfers', icon: 'assets/app-icons/subway.png', allowed: true, ageAppropriate: true, category: 'gaming' },
+            { id: 'app-clash', name: 'Clash Royale', icon: 'assets/app-icons/clash.png', allowed: false, ageAppropriate: false, category: 'gaming' }
         ]
     },
     'social': {
@@ -45,214 +46,104 @@ const categoriesData = {
         icon: 'chat_bubble',
         class: 'social',
         limitEnabled: true,
-        limitMinutes: 0, // Blocked effectively if 0
-        apps: [
-            { name: 'WhatsApp', icon: 'assets/app-icons/whatsapp.png', allowed: false },
-            { name: 'Messenger', icon: 'assets/app-icons/messenger.png', allowed: false },
-            { name: 'Instagram', icon: 'assets/app-icons/instagram.png', allowed: false }
-        ]
-    },
-    'creativity': {
-        name: 'Creativity',
-        icon: 'brush',
-        class: 'creativity',
-        limitEnabled: true,
-        limitMinutes: 45,
-        apps: [
-            { name: 'Photos', icon: 'assets/app-icons/photos.png', allowed: true },
-            { name: 'Canva', icon: 'assets/app-icons/canva.png', allowed: true },
-            { name: 'Sketchbook', icon: 'assets/app-icons/sketchbook.png', allowed: true }
-        ]
-    },
-    'utilities': {
-        name: 'System & Utilities',
-        icon: 'settings',
-        class: 'utilities',
-        limitEnabled: false,
         limitMinutes: 0,
         apps: [
-            { name: 'Settings', icon: 'assets/app-icons/settings.png', allowed: true },
-            { name: 'Calculator', icon: 'assets/app-icons/calculator.png', allowed: true },
-            { name: 'Clock', icon: 'assets/app-icons/clock.png', allowed: true },
-            { name: 'Maps', icon: 'assets/app-icons/maps.png', allowed: true },
-            { name: 'Weather', icon: 'assets/app-icons/weather.png', allowed: true },
-            { name: 'Notes', icon: 'assets/app-icons/notes.png', allowed: true },
-            { name: 'Calendar', icon: 'assets/app-icons/calendar.png', allowed: true },
-            { name: 'Files', icon: 'assets/app-icons/files.png', allowed: true }
+            { id: 'app-whatsapp', name: 'WhatsApp', icon: 'assets/app-icons/whatsapp.png', allowed: false, ageAppropriate: true, category: 'social' },
+            { id: 'app-messenger', name: 'Messenger', icon: 'assets/app-icons/messenger.png', allowed: false, ageAppropriate: true, category: 'social' },
+            { id: 'app-instagram', name: 'Instagram', icon: 'assets/app-icons/instagram.png', allowed: false, ageAppropriate: false, category: 'social' },
+            { id: 'app-tiktok', name: 'TikTok', icon: 'assets/app-icons/tiktok.png', allowed: false, ageAppropriate: false, category: 'social' }
         ]
-    }
+    },
+    'creativity': { name: 'Creativity', icon: 'brush', class: 'creativity', limitEnabled: true, limitMinutes: 45, apps: [] },
+    'utilities': { name: 'System & Utilities', icon: 'settings', class: 'utilities', limitEnabled: false, limitMinutes: 0, apps: [] }
 };
 
-let currentCategoryData = null;
+let appData = null;
+let currentByCategory = 'entertainment';
+let currentFilterMode = 'age-appropriate';
+let currentSearchQuery = '';
 
 const CategoryHandlers = {
     init() {
         const urlParams = new URLSearchParams(window.location.search);
-        const categoryId = urlParams.get('category') || 'entertainment';
+        currentByCategory = urlParams.get('category') || 'entertainment';
 
-        this.loadCategory(categoryId);
+        // 1. Load Data from LocalStorage or Default
+        const stored = localStorage.getItem('parentApp_categoriesData');
+        if (stored) {
+            try {
+                appData = JSON.parse(stored);
+            } catch (e) {
+                console.error('Error parsing stored data', e);
+                appData = JSON.parse(JSON.stringify(defaultCategoriesData));
+            }
+        } else {
+            appData = JSON.parse(JSON.stringify(defaultCategoriesData));
+            this.saveState();
+        }
+
+        // Setup global click listener to close dropdowns
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.menu-popup') && !e.target.closest('.category-chip')) {
+                this.closeAllMenus();
+            }
+        });
+
+        this.loadCategory(currentByCategory);
+    },
+
+    saveState() {
+        localStorage.setItem('parentApp_categoriesData', JSON.stringify(appData));
     },
 
     loadCategory(categoryId) {
-        currentCategoryData = categoriesData[categoryId];
-        if (!currentCategoryData) return;
+        const data = appData[categoryId];
+        if (!data) return;
 
-        // Update Header & Hero
-        // document.getElementById('page-title').textContent = currentCategoryData.name; // Keep generic title or specific? Design usually keeps generic "Category Settings"
-        document.getElementById('hero-name').textContent = currentCategoryData.name;
-        document.getElementById('hero-symbol').textContent = currentCategoryData.icon;
+        // UI Updates
+        document.getElementById('hero-name').textContent = data.name;
+        document.getElementById('hero-symbol').textContent = data.icon;
+        document.getElementById('hero-icon').className = `hero-cat-icon ${data.class}`;
 
-        const heroIcon = document.getElementById('hero-icon');
-        heroIcon.className = `hero-cat-icon ${currentCategoryData.class}`;
-
-        // Update Limit Controls
+        // Controls Init
         const toggle = document.getElementById('limit-toggle');
         const sliderContainer = document.getElementById('limit-slider-wrapper');
         const slider = document.getElementById('time-range');
-
-        toggle.checked = currentCategoryData.limitEnabled;
-        slider.value = currentCategoryData.limitMinutes;
-
-        if (currentCategoryData.limitEnabled) {
-            sliderContainer.classList.remove('disabled');
-        } else {
-            sliderContainer.classList.add('disabled');
-        }
-
-        this.updateTimeDisplay(currentCategoryData.limitMinutes);
-
-        // Update Session Controls
-        const sessionToggle = document.getElementById('session-toggle');
-        const sessionContainer = document.getElementById('session-slider-wrapper');
-        const sessionSlider = document.getElementById('session-range');
-
-        // Default session values if not in data (using mock defaults)
-        const sessionEnabled = currentCategoryData.sessionEnabled !== undefined ? currentCategoryData.sessionEnabled : false;
-        const sessionMinutes = currentCategoryData.sessionMinutes || 45;
-
-        sessionToggle.checked = sessionEnabled;
-        sessionSlider.value = sessionMinutes;
-
-        if (sessionEnabled) {
-            sessionContainer.classList.remove('disabled');
-        } else {
-            sessionContainer.classList.add('disabled');
-        }
-
-        this.updateSessionDisplay(sessionMinutes);
-
-        // Populate Apps
-        this.renderApps(currentCategoryData.apps);
-    },
-
-    toggleLimit() {
-        const toggle = document.getElementById('limit-toggle');
-        const sliderContainer = document.getElementById('limit-slider-wrapper');
-
-        if (toggle.checked) {
-            sliderContainer.classList.remove('disabled');
-        } else {
-            sliderContainer.classList.add('disabled');
-        }
-    },
-
-    toggleSessionLimit() {
-        const toggle = document.getElementById('session-toggle');
-        const sliderContainer = document.getElementById('session-slider-wrapper');
-
-        if (toggle.checked) {
-            sliderContainer.classList.remove('disabled');
-        } else {
-            sliderContainer.classList.add('disabled');
-        }
-    },
-
-    updateTimeDisplay(val) {
-        const value = val !== undefined ? val : document.getElementById('time-range').value;
         const display = document.getElementById('time-value');
 
-        // Update session slider max to match daily limit (or cap at 120m for UI consistency if daily is huge)
-        const sessionSlider = document.getElementById('session-range');
-        const dailyValue = parseInt(value);
+        toggle.checked = data.limitEnabled;
+        slider.value = data.limitMinutes;
 
-        // If daily limit blocks usage (0), disable session slider or set to 0
-        if (dailyValue === 0) {
-            sessionSlider.value = 0;
-            sessionSlider.disabled = true;
-            this.updateSessionDisplay(0);
+        if (data.limitEnabled) {
+            sliderContainer.classList.remove('disabled');
         } else {
-            sessionSlider.disabled = false;
-
-            // Set max of session slider to daily limit (but maybe keep a reasonable floor like 15m)
-            // If daily limit is 15m, max is 15m.
-            // If daily limit is 300m, maybe we still cap session slider at 120m visually? 
-            // The user asked for "max time and all" to update. 
-            // Let's set max to Math.min(dailyValue, 240) so it scales with daily limit.
-
-            const newMax = Math.max(15, dailyValue);
-            sessionSlider.setAttribute('max', newMax);
-
-            // Update labels
-            const rangeLabels = document.querySelector('#session-slider-wrapper .range-labels');
-            if (rangeLabels) {
-                const maxLabel = rangeLabels.querySelectorAll('span')[1];
-                if (maxLabel) {
-                    const hours = Math.floor(newMax / 60);
-                    const minutes = newMax % 60;
-                    if (hours > 0) {
-                        maxLabel.textContent = `${hours}h ${minutes > 0 ? minutes + 'm' : ''}`;
-                    } else {
-                        maxLabel.textContent = `${minutes}m`;
-                    }
-                }
-            }
-
-            // Clamp current value
-            if (parseInt(sessionSlider.value) > dailyValue) {
-                sessionSlider.value = dailyValue;
-            }
-            // If value was 0 but we have time now, reset to default 15 or something? 
-            // No, logic below handles display update.
-
-            this.updateSessionDisplay(sessionSlider.value);
+            sliderContainer.classList.add('disabled');
         }
 
-        if (value == 0) {
-            display.textContent = 'Blocked';
-        } else if (value >= 240) { // Max value assumption
-            display.textContent = '4h+';
-        } else {
-            const hours = Math.floor(value / 60);
-            const minutes = value % 60;
-            if (hours > 0) {
-                display.textContent = `${hours}h ${minutes > 0 ? minutes + 'm' : ''}`;
-            } else {
-                display.textContent = `${minutes}m`;
-            }
-        }
+        this.updateTimeDisplayUI(data.limitMinutes);
+
+        // Render
+        this.filterAndRenderApps();
     },
 
-    updateSessionDisplay(val) {
-        const value = val !== undefined ? val : document.getElementById('session-range').value;
-        const display = document.getElementById('session-value');
-        const dailyValue = parseInt(document.getElementById('time-range').value);
+    filterAndRenderApps() {
+        const data = appData[currentByCategory];
+        if (!data) return;
 
-        // Ensure session doesn't exceed daily limit (if daily is active/non-zero)
-        if (dailyValue > 0 && parseInt(value) > dailyValue) {
-            // Revert slider visually if user tries to drag past daily limit
-            document.getElementById('session-range').value = dailyValue;
-            this.updateSessionDisplay(dailyValue); // Recursive call but safely capped
-            return;
-        }
+        // Filter Logic
+        let filteredApps = data.apps.filter(app => {
+            // 1. Text Search
+            if (currentSearchQuery && !app.name.toLowerCase().includes(currentSearchQuery.toLowerCase())) {
+                return false;
+            }
+            // 2. Age Filter
+            if (currentFilterMode === 'age-appropriate' && !app.ageAppropriate) {
+                return false;
+            }
+            return true;
+        });
 
-        const hours = Math.floor(value / 60);
-        const minutes = value % 60;
-
-        if (hours > 0) {
-            display.textContent = `${hours}h ${minutes > 0 ? minutes + 'm' : ''}`;
-        } else {
-            display.textContent = `${minutes}m`;
-        }
+        this.renderApps(filteredApps);
     },
 
     renderApps(apps) {
@@ -262,19 +153,61 @@ const CategoryHandlers = {
         count.textContent = `${apps.length} apps`;
         list.innerHTML = '';
 
+        if (apps.length === 0) {
+            list.innerHTML = `<div style="text-align: center; color: var(--color-text-tertiary); padding: 20px;">No apps found</div>`;
+            return;
+        }
+
+        const currentCatName = appData[currentByCategory].name;
+
         apps.forEach(app => {
             const item = document.createElement('div');
             item.className = 'app-item';
-            // Placeholder icon if generic asset not found
+            // Disable toggle if category is blocked? User request was "toggled off", which implies setting checking to false.
+
+            const dropdownId = `dd-${app.id}`;
+            const targetCategories = ['education', 'entertainment', 'gaming', 'social', 'creativity'];
+
+            let menuOptions = targetCategories.map(catKey => {
+                const catData = appData[catKey];
+                const isSelected = app.category === catKey;
+                // Original category tracking not implemented in persistence for simplicity, but could be added to app object.
+
+                return `
+                    <div class="menu-item dropdown-item ${isSelected ? 'selected' : ''}" 
+                        onclick="CategoryHandlers.changeAppCategory('${app.id}', '${catKey}')">
+                        ${catData.name} 
+                        <span class="material-symbols-outlined check-icon">check</span>
+                    </div>
+                `;
+            }).join('');
+
             const iconSrc = app.icon || 'assets/app-icons/default.png';
+            const catName = appData[app.category] ? appData[app.category].name : app.category;
 
             item.innerHTML = `
-                <div class="app-info">
+                <div class="app-left">
                     <img src="${iconSrc}" class="app-icon" onerror="this.src='https://ui-avatars.com/api/?name=${app.name}&background=random&color=fff&size=80'">
-                    <span class="app-name">${app.name}</span>
+                    <div class="app-details">
+                        <span class="app-name">
+                            ${app.name}
+                            ${!app.ageAppropriate ? '<span class="not-age-appropriate-badge">13+</span>' : ''}
+                        </span>
+                        <div class="chip-wrapper">
+                            <div class="category-chip" onclick="CategoryHandlers.toggleDropdown(event, '${dropdownId}')">
+                                <span class="material-symbols-outlined">label</span>
+                                <span class="chip-text">${catName}</span>
+                                <span class="material-symbols-outlined" style="font-size: 16px;">arrow_drop_down</span>
+                            </div>
+                            <!-- Dropdown -->
+                            <div class="menu-popup" id="${dropdownId}">
+                                ${menuOptions}
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <label class="app-toggle">
-                    <input type="checkbox" ${app.allowed ? 'checked' : ''}>
+                    <input type="checkbox" ${app.allowed ? 'checked' : ''} onchange="CategoryHandlers.toggleApp('${app.id}')">
                     <span class="slider"></span>
                 </label>
             `;
@@ -282,34 +215,135 @@ const CategoryHandlers = {
         });
     },
 
+    toggleDropdown(event, id) {
+        event.stopPropagation();
+        this.closeAllMenus();
+        const menu = document.getElementById(id);
+        const rect = event.currentTarget.getBoundingClientRect();
+
+        menu.style.display = 'block';
+        menu.style.top = `${rect.bottom + 4}px`;
+        menu.style.left = `${rect.left}px`;
+        setTimeout(() => menu.classList.add('visible'), 10);
+    },
+
+    closeAllMenus() {
+        document.querySelectorAll('.menu-popup').forEach(menu => {
+            menu.classList.remove('visible');
+            setTimeout(() => { if (!menu.classList.contains('visible')) menu.style.display = 'none'; }, 150);
+        });
+    },
+
+    changeAppCategory(appId, newCategoryKey) {
+        // Robust Move: Search all categories to find the app (just in case)
+        let foundApp = null;
+        let sourceList = null;
+
+        Object.keys(appData).forEach(catKey => {
+            const list = appData[catKey].apps;
+            const idx = list.findIndex(a => a.id === appId);
+            if (idx > -1) {
+                foundApp = list[idx];
+                sourceList = list;
+                if (catKey !== newCategoryKey) {
+                    list.splice(idx, 1); // Remove from old
+                }
+            }
+        });
+
+        if (foundApp && sourceList) {
+            // Update app
+            foundApp.category = newCategoryKey;
+
+            // Add to new (if different)
+            // Note: If catKey already matched newCategoryKey (clicking same opt), we spliced it out so we must push it back or avoid splicing.
+            // Simplified: We always splce above. Safe to push now.
+
+            appData[newCategoryKey].apps.push(foundApp);
+
+            this.saveState();
+            this.filterAndRenderApps(); // Re-render current view (App will disappear if it was moved OUT of current view)
+
+            console.log(`Moved ${foundApp.name} to ${appData[newCategoryKey].name}`);
+        }
+    },
+
+    setFilterMode(mode) {
+        currentFilterMode = mode;
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.classList.remove('active');
+            if (tab.innerText.toLowerCase().includes(mode === 'age-appropriate' ? 'age' : 'all')) {
+                tab.classList.add('active');
+            }
+        });
+        this.filterAndRenderApps();
+    },
+
     searchApps(query) {
-        if (!currentCategoryData) return;
-        const lowerQuery = query.toLowerCase();
-        const filtered = currentCategoryData.apps.filter(app =>
-            app.name.toLowerCase().includes(lowerQuery)
-        );
-        this.renderApps(filtered);
+        currentSearchQuery = query;
+        this.filterAndRenderApps();
+    },
+
+    toggleApp(appId) {
+        const app = appData[currentByCategory].apps.find(a => a.id === appId);
+        if (app) {
+            app.allowed = !app.allowed;
+            this.saveState();
+        }
+    },
+
+    toggleLimit() {
+        const toggle = document.getElementById('limit-toggle');
+        const sliderContainer = document.getElementById('limit-slider-wrapper');
+
+        const isEnabled = toggle.checked;
+        appData[currentByCategory].limitEnabled = isEnabled;
+
+        if (isEnabled) {
+            sliderContainer.classList.remove('disabled');
+        } else {
+            sliderContainer.classList.add('disabled');
+            // User did not explicitly say "Toggle off = Block", they said "Block category".
+            // Typically Unchecked Toggle = Always Allowed (No Limit).
+            // So we DO NOT cascade block here.
+        }
+        this.saveState();
+    },
+
+    updateTimeDisplay() {
+        // Called by oninput of slider
+        const slider = document.getElementById('time-range');
+        const val = parseInt(slider.value);
+
+        appData[currentByCategory].limitMinutes = val;
+        this.updateTimeDisplayUI(val);
+
+        // FEATURE: If Blocked (0m), toggle OFF all apps
+        if (val === 0) {
+            appData[currentByCategory].apps.forEach(app => {
+                app.allowed = false;
+            });
+            // Re-render to show switches turning off
+            this.filterAndRenderApps();
+        }
+
+        this.saveState();
+    },
+
+    updateTimeDisplayUI(val) {
+        const display = document.getElementById('time-value');
+        if (val == 0) display.textContent = 'Blocked';
+        else if (val >= 240) display.textContent = '4h+';
+        else {
+            const h = Math.floor(val / 60);
+            const m = val % 60;
+            display.textContent = h > 0 ? `${h}h ${m}m` : `${m}m`;
+        }
     },
 
     save() {
-        // Navigate back to app limits screen, preserving child and schedule context
-        const urlParams = new URLSearchParams(window.location.search);
-        const childName = urlParams.get('child');
-        const scheduleId = urlParams.get('schedule');
-
-        let targetUrl = 'app-limits.html';
-        if (scheduleId) {
-            targetUrl += `?schedule=${scheduleId}`;
-            if (childName) {
-                targetUrl += `&child=${encodeURIComponent(childName)}`;
-            }
-        } else if (childName) {
-            targetUrl += `?child=${encodeURIComponent(childName)}`;
-        }
-
-        window.location.href = targetUrl;
+        window.history.back();
     }
 };
 
-// Initialize
 document.addEventListener('DOMContentLoaded', () => CategoryHandlers.init());

@@ -36,7 +36,31 @@ const ParentDashboardHandlers = {
             greeting.textContent = `${timeOfDay}, ${parentName}`;
         }
 
-        console.log('Parent profile loaded:', parentRole);
+    },
+
+    /**
+     * Load children status (Active/Idle)
+     */
+    loadChildrenStatus() {
+        // Mock data matching child-details.js
+        const statusMap = {
+            'Leo': 'active', // Active Now
+            'Mia': 'idle'    // Idle
+        };
+
+        Object.entries(statusMap).forEach(([name, status]) => {
+            const el = document.getElementById(`status-${name}`);
+            if (el) {
+                if (status === 'active') {
+                    el.className = 'activity-status active';
+                    el.querySelector('span').textContent = 'Active Now';
+                } else {
+                    el.className = 'activity-status idle';
+                    el.querySelector('span').textContent = 'Idle';
+                }
+            }
+        });
+        console.log('Children status loaded');
     },
 
     /**
@@ -188,5 +212,6 @@ const ParentDashboardHandlers = {
 document.addEventListener('DOMContentLoaded', () => {
     ThemeManager.initialize();
     ParentDashboardHandlers.loadParentProfile();
+    ParentDashboardHandlers.loadChildrenStatus();
     console.log('Parental Control Prototype - Parent Dashboard');
 });

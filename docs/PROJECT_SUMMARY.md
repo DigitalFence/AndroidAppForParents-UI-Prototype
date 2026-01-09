@@ -59,7 +59,7 @@ AndroidAppForParents-UI-Prototype/
 │
 ├── 📄 Documentation
 │   ├── README.md                    # Comprehensive project docs
-│   ├── DESIGN_SYSTEM.md            # Design system guide
+│   ├── UI-DESIGN-STANDARDS.md       # Complete design system & standards
 │   ├── LOCALIZATION.md             # Localization guide
 │   ├── LICENSE                      # MIT License
 │   └── .gitignore                   # Git ignore rules
@@ -95,7 +95,7 @@ AndroidAppForParents-UI-Prototype/
    - Deployment instructions
    - Tech stack
 ✅ Deployment guide with step-by-step instructions
-✅ Existing DESIGN_SYSTEM.md and LOCALIZATION.md maintained
+✅ Consolidated `UI-DESIGN-STANDARDS.md` maintained
 
 ## 📊 Project Statistics
 
@@ -173,7 +173,15 @@ https://YOUR_USERNAME.github.io/AndroidAppForParents-UI-Prototype/
 5. **Settings & Configuration**
    - Settings page
    - Device type selection
+   - Device type selection
    - Profile management
+
+### 6. **Refinements (Jan 9, 2026)**
+   - **Consolidated Design System**: `UI-DESIGN-STANDARDS.md`
+   - **Schedule Flow**: Split into Create / Edit screens
+   - **Child Details**: Collapsible Devices list, Delete Profile (3-dot menu)
+   - **Status Indicators**: Enhanced Active/Idle visuals on dashboard
+   - **Navigation**: Linked Join Family flow correctly
 
 ## 🏁 Next Steps
 

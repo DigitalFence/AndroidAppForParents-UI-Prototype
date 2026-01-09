@@ -2,8 +2,8 @@
 const schedulesData = [
     {
         id: 1,
-        title: 'Weekend Schedule',
-        days: 'Weekends',
+        title: 'Custom Study Time',
+        days: 'Mon, Tue, Fri',
         type: 'downtime',
         startTime: '09:00',
         endTime: '20:00',
@@ -74,6 +74,13 @@ const ScheduleHandlers = {
                 }
             });
         }
+
+        // Force Override for Demo: Ensure ID 1 shows correct text regardless of stale storage
+        const demoSchedule = schedulesData.find(s => s.id === 1);
+        if (demoSchedule) {
+            demoSchedule.days = 'Mon, Tue, Fri';
+            demoSchedule.title = 'Custom Study Time';
+        }
     },
 
     saveSchedulesToStorage() {
@@ -107,20 +114,23 @@ const ScheduleHandlers = {
             clone.querySelector('.schedule-days').textContent = schedule.days;
             clone.querySelector('.time-text').textContent = `${schedule.startTime} - ${schedule.endTime}`;
 
-            const timePill = clone.querySelector('.time-pill');
-            timePill.onclick = () => TimePicker.open(schedule.id);
-            timePill.style.cursor = 'pointer';
-
-            const appsPill = clone.querySelector('.apps-pill');
-            appsPill.onclick = () => {
+            const editSchedule = () => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const childName = urlParams.get('child');
-                let targetUrl = `app-limits.html?schedule=${schedule.id}`;
+                let targetUrl = `edit-schedule.html?id=${schedule.id}`;
                 if (childName) {
                     targetUrl += `&child=${encodeURIComponent(childName)}`;
                 }
                 window.location.href = targetUrl;
             };
+
+            const timePill = clone.querySelector('.time-pill');
+            timePill.onclick = editSchedule;
+            timePill.style.cursor = 'pointer';
+
+            const appsPill = clone.querySelector('.apps-pill');
+            appsPill.onclick = editSchedule;
+            appsPill.style.cursor = 'pointer';
             appsPill.style.cursor = 'pointer';
 
             clone.querySelector('.apps-text').textContent = `Tap to configure`;
@@ -197,9 +207,31 @@ const ScheduleHandlers = {
         localStorage.setItem('child_data_overrides', JSON.stringify(storedData));
     },
 
+    deleteSchedule(btn, event) {
+        event.stopPropagation();
+        if (!confirm('Are you sure you want to delete this schedule?')) return;
+
+        const card = btn.closest('.schedule-card');
+        const toggle = card.querySelector('.schedule-toggle');
+        const id = parseInt(toggle.getAttribute('data-id'));
+
+        const idx = schedulesData.findIndex(s => s.id === id);
+        if (idx > -1) {
+            schedulesData.splice(idx, 1);
+            this.saveSchedulesToStorage();
+            this.renderSchedules();
+        }
+    },
+
     addSchedule() {
-        console.log('Add Schedule Clicked');
-        alert('Add Schedule feature coming soon!');
+        const urlParams = new URLSearchParams(window.location.search);
+        const childName = urlParams.get('child');
+
+        let targetUrl = 'create-schedule.html';
+        if (childName) {
+            targetUrl += `?child=${encodeURIComponent(childName)}`;
+        }
+        window.location.href = targetUrl;
     }
 };
 

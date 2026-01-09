@@ -72,7 +72,7 @@ AndroidAppForParents-UI-Prototype/
 ├── docs/                      # Documentation
 │   └── mockups/              # Design mockups
 ├── *.html                     # Application pages
-├── DESIGN_SYSTEM.md          # Design system documentation
+├── UI-DESIGN-STANDARDS.md    # Complete Design System & Standards
 ├── LOCALIZATION.md           # Localization guide
 └── README.md                 # This file
 ```
@@ -141,7 +141,7 @@ The app follows a comprehensive design system with:
 - **Components**: Buttons, cards, modals, inputs, toggles
 - **Animations**: Smooth transitions and micro-interactions
 
-See [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) for complete details.
+See [UI-DESIGN-STANDARDS.md](UI-DESIGN-STANDARDS.md) for complete details.
 
 ## 🌍 Localization
 

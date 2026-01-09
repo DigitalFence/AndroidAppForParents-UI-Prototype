@@ -106,6 +106,15 @@
                     <span class="count-badge" id="app-count">0 apps</span>
                 </div>
 
+                <div class="filter-tabs">
+                    <div class="filter-tab active" onclick="CategoryHandlers.setFilterMode('age-appropriate')">
+                        Age Appropriate
+                    </div>
+                    <div class="filter-tab" onclick="CategoryHandlers.setFilterMode('all-apps')">
+                        All Apps
+                    </div>
+                </div>
+
                 <div class="search-box">
                     <span class="material-symbols-outlined">search</span>
                     <input type="text" placeholder="Search apps..." onkeyup="CategoryHandlers.searchApps(this.value)">

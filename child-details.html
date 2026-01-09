@@ -33,9 +33,17 @@
                 <span class="material-symbols-outlined">arrow_back</span>
             </button>
             <h1 class="page-title">Leo</h1>
-            <button class="more-button" onclick="ChildHandlers.showMore()">
-                <span class="material-symbols-outlined">more_horiz</span>
-            </button>
+            <div style="position: relative;">
+                <button class="more-button" onclick="ChildHandlers.toggleMenu()">
+                    <span class="material-symbols-outlined">more_horiz</span>
+                </button>
+                <div class="child-menu-dropdown" id="child-menu">
+                    <button class="menu-item delete" onclick="ChildHandlers.deleteChildProfile()">
+                        <span class="material-symbols-outlined">delete</span>
+                        Delete Child Profile
+                    </button>
+                </div>
+            </div>
         </header>
 
         <!-- Main Content -->
@@ -54,6 +62,41 @@
                             <span class="pulse-dot"></span>
                             <span>Active Now</span>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Devices in Family Section -->
+            <div class="devices-section">
+                <div class="devices-header" onclick="ChildHandlers.toggleDevices()"
+                    style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding-bottom: 0;">
+                    <h3 class="devices-title" style="margin: 0; display: flex; align-items: center; gap: 8px;">
+                        <span class="material-symbols-outlined">phone_android</span>
+                        Devices in Family
+                    </h3>
+                    <span class="material-symbols-outlined" id="devices-toggle-icon"
+                        style="transition: transform 0.3s; color: var(--color-text-tertiary);">expand_more</span>
+                </div>
+                <div class="devices-list" id="devices-list" style="display: none; margin-top: 16px;">
+                    <div class="device-item active">
+                        <div class="device-icon">
+                            <span class="material-symbols-outlined">phone_iphone</span>
+                        </div>
+                        <div class="device-info">
+                            <span class="device-name">iPhone 14</span>
+                            <span class="device-status active">Active Now</span>
+                        </div>
+                        <div class="device-indicator active"></div>
+                    </div>
+                    <div class="device-item idle">
+                        <div class="device-icon">
+                            <span class="material-symbols-outlined">tablet_mac</span>
+                        </div>
+                        <div class="device-info">
+                            <span class="device-name">iPad Air</span>
+                            <span class="device-status">Idle</span>
+                        </div>
+                        <div class="device-indicator"></div>
                     </div>
                 </div>
             </div>

@@ -7,9 +7,49 @@ const ChildHandlers = {
     },
 
     // More Menu
-    showMore() {
-        console.log('More menu clicked');
-        // TODO: Show options menu
+    // More Menu
+    // More Menu
+    toggleMenu() {
+        const menu = document.getElementById('child-menu');
+        menu.classList.toggle('active');
+
+        if (menu.classList.contains('active')) {
+            setTimeout(() => {
+                document.addEventListener('click', function closeMenu(e) {
+                    if (!e.target.closest('.more-button') && !menu.contains(e.target)) {
+                        menu.classList.remove('active');
+                        document.removeEventListener('click', closeMenu);
+                    }
+                });
+            }, 0);
+        }
+    },
+
+    deleteChildProfile() {
+        const childName = getChildName();
+        if (confirm(`Are you sure you want to delete ${childName}'s profile? This cannot be undone.`)) {
+            localStorage.removeItem(`schedules_${childName}`);
+            const overrides = JSON.parse(localStorage.getItem('child_data_overrides')) || {};
+            delete overrides[childName];
+            localStorage.setItem('child_data_overrides', JSON.stringify(overrides));
+
+            NotificationManager.show('Profile deleted', 'success');
+            setTimeout(() => window.location.href = 'parent-dashboard.html', 1000);
+        }
+    },
+
+    // Toggle Devices Section
+    toggleDevices() {
+        const list = document.getElementById('devices-list');
+        const icon = document.getElementById('devices-toggle-icon');
+
+        if (list.style.display === 'none') {
+            list.style.display = ''; // Reverts to CSS default (flex)
+            icon.classList.add('rotated');
+        } else {
+            list.style.display = 'none';
+            icon.classList.remove('rotated');
+        }
     },
 
     // Lend My Device

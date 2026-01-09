@@ -72,7 +72,7 @@
     transform: scale(0.95);
 }
 
-/* Progress Indicators */
+/* Progress Indicators - 4-bar progressive filling */
 .progress-indicators {
     display: flex;
     justify-content: center;
@@ -80,7 +80,7 @@
     margin: 48px 0 32px 0;
 }
 
-.progress-dot {
+.progress-bar {
     width: 64px;
     height: 6px;
     border-radius: 3px;
@@ -88,17 +88,11 @@
     transition: all 0.3s;
 }
 
-.dark .progress-dot {
+.dark .progress-bar {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-.progress-dot.active {
-    background-color: var(--color-primary);
-    box-shadow: 0 2px 8px rgba(93, 138, 244, 0.3);
-}
-
-.progress-dot:nth-child(1),
-.progress-dot:nth-child(2) {
+.progress-bar.active {
     background-color: var(--color-primary);
     box-shadow: 0 2px 8px rgba(93, 138, 244, 0.3);
 }

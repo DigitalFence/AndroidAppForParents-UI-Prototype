@@ -14,7 +14,7 @@ const FamilySetupHandlers = {
      * Handle join family action
      */
     joinFamily() {
-        NotificationManager.show('Join family flow coming soon...', 'info');
-        // TODO: Navigate to join family screen
+        // Navigate to join family screen
+        window.location.href = 'join-family.html';
     }
 };

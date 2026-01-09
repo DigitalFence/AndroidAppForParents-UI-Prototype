@@ -481,18 +481,38 @@
     font-weight: 700;
     align-self: flex-start;
     margin-top: 4px;
+    transition: all 0.3s ease;
 }
 
-.activity-status.playing {
-    background-color: rgba(59, 130, 246, 0.1);
-    border: 1px solid rgba(59, 130, 246, 0.2);
-    color: #3B82F6;
-}
-
-.activity-status.online {
-    background-color: rgba(16, 185, 129, 0.1);
+/* Active State */
+.activity-status.active {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #059669;
     border: 1px solid rgba(16, 185, 129, 0.2);
-    color: #10B981;
+}
+
+.activity-status.active .status-dot {
+    background-color: #10B981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    animation: pulse 2s infinite;
+}
+
+/* Idle State */
+.activity-status.idle {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--color-text-secondary);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dark .activity-status.idle {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-tertiary);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.activity-status.idle .status-dot {
+    background-color: var(--color-text-tertiary);
+    opacity: 0.5;
 }
 
 .status-dot {
@@ -501,24 +521,20 @@
     border-radius: 50%;
 }
 
-.activity-status.playing .status-dot {
-    background-color: #3B82F6;
-    animation: pulse 2s infinite;
-}
-
-.activity-status.online .status-dot {
-    background-color: #10B981;
-}
-
 @keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 1;
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
     }
 
-    50% {
-        opacity: 0.5;
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
     }
 }
 

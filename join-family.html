@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Family - Digital Fence</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Modular CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/join-family.css">
+    <link rel="stylesheet" href="components/buttons.css">
+</head>
+
+<body>
+    <div class="app-container" id="app">
+        <!-- Background gradient -->
+        <div class="background-gradient"></div>
+
+        <!-- Content container -->
+        <div class="content-container">
+            <!-- Back button and title -->
+            <div class="header-bar">
+                <button class="back-button" onclick="window.location.href='family-setup.html'" title="Back">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <h2 class="header-title">Join Family</h2>
+                <div style="width: 40px;"></div>
+            </div>
+
+            <!-- Progress indicators -->
+            <div class="progress-indicators">
+                <div class="progress-bar active"></div>
+                <div class="progress-bar active"></div>
+                <div class="progress-bar"></div>
+                <div class="progress-bar"></div>
+            </div>
+
+            <!-- Spacer -->
+            <div style="height: 24px;"></div>
+
+            <!-- Tabs -->
+            <div class="tabs-container">
+                <button class="tab active" data-tab="families" onclick="JoinFamilyHandlers.switchTab('families')">
+                    <span class="material-symbols-outlined tab-icon">groups</span>
+                    <span class="tab-label">My Families</span>
+                </button>
+                <button class="tab" data-tab="join" onclick="JoinFamilyHandlers.switchTab('join')">
+                    <span class="material-symbols-outlined tab-icon">add_circle</span>
+                    <span class="tab-label">Join Family</span>
+                </button>
+            </div>
+
+            <!-- Tab Content: My Families -->
+            <div class="tab-content active" id="families-content">
+                <div class="families-wrapper">
+                    <p class="content-subtitle">Select a family to continue setup</p>
+
+                    <!-- Family Card -->
+                    <button class="family-card-modern" onclick="JoinFamilyHandlers.selectFamily('parth-family')">
+                        <div class="family-avatar">
+                            <span class="material-symbols-outlined">groups</span>
+                        </div>
+                        <div class="family-info-modern">
+                            <h3 class="family-name-modern">Parth's Family</h3>
+                            <p class="family-meta">Joined Nov 17, 2025</p>
+                        </div>
+                        <div class="family-action">
+                            <span class="action-text">Continue</span>
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Content: Join Family -->
+            <div class="tab-content" id="join-content">
+                <div class="join-wrapper">
+                    <div class="join-hero">
+                        <div class="hero-icon-wrapper">
+                            <span class="material-symbols-outlined hero-icon">diversity_3</span>
+                        </div>
+                        <h2 class="hero-title">Join a Family</h2>
+                        <p class="hero-subtitle">Enter the invitation code shared by a family member</p>
+                    </div>
+
+                    <!-- Code Input Card -->
+                    <div class="code-card">
+                        <label class="code-label">
+                            <span class="material-symbols-outlined label-icon">vpn_key</span>
+                            6-Digit Code
+                        </label>
+                        <input type="text" id="invitationCode" class="code-input-modern" placeholder="_ _ _ _ _ _"
+                            maxlength="6" oninput="JoinFamilyHandlers.validateCode(this)" required>
+                        <p class="code-hint" id="codeHint"></p>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button id="submitBtn" class="btn-join" onclick="JoinFamilyHandlers.submit()" disabled>
+                        <span class="material-symbols-outlined btn-icon-left">send</span>
+                        <span class="btn-text-modern">Send Join Request</span>
+                    </button>
+
+                    <!-- Quick Info -->
+                    <div class="quick-info">
+                        <div class="info-item">
+                            <span class="material-symbols-outlined info-dot">verified</span>
+                            <span class="info-text">Instant notification to family admin</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="material-symbols-outlined info-dot">schedule</span>
+                            <span class="info-text">Usually approved within minutes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme toggle -->
+        <button class="theme-toggle" onclick="ThemeManager.toggle()" title="Toggle dark mode">
+            <span class="material-symbols-outlined">dark_mode</span>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/join-family.js"></script>
+</body>
+
+</html>

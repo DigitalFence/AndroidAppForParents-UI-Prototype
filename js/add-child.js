@@ -54,8 +54,8 @@ const AddChildHandlers = {
             });
         });
 
-        // Auto-update template and avatars based on age
-        document.getElementById('child-age').addEventListener('input', this.handleAgeChange);
+        // Auto-update template and avatars based on year of birth
+        document.getElementById('child-yob').addEventListener('input', this.handleYOBChange);
     },
 
     /**
@@ -87,13 +87,12 @@ const AddChildHandlers = {
         this.updateAvatarSuggestions();
     },
 
-    /**
-     * Update avatar suggestions based on age and gender
-     */
     updateAvatarSuggestions() {
-        const age = parseInt(document.getElementById('child-age').value);
+        const yob = parseInt(document.getElementById('child-yob').value);
+        const currentYear = new Date().getFullYear();
+        const age = currentYear - yob;
 
-        if (!selectedGender || !age || age < 5 || age > 17) {
+        if (!selectedGender || !yob || age < 5 || age > 17) {
             document.getElementById('avatar-suggestions').classList.remove('show');
             document.getElementById('suggestions-label').classList.remove('show');
             return;
@@ -242,10 +241,12 @@ const AddChildHandlers = {
     },
 
     /**
-     * Handle age change - show template suggestions and update avatars
+     * Handle year of birth change - calculate age, show template suggestions and update avatars
      */
-    handleAgeChange() {
-        const age = parseInt(document.getElementById('child-age').value);
+    handleYOBChange() {
+        const yob = parseInt(document.getElementById('child-yob').value);
+        const currentYear = new Date().getFullYear();
+        const age = currentYear - yob;
 
         // Show template suggestions
         AddChildHandlers.showTemplateSuggestions(age);
@@ -266,12 +267,11 @@ const AddChildHandlers = {
         NotificationManager.show('You can set up controls manually later', 'info');
     },
 
-    /**
-     * Create child profile
-     */
     createProfile() {
         const name = document.getElementById('child-name').value.trim();
-        const age = document.getElementById('child-age').value;
+        const yob = parseInt(document.getElementById('child-yob').value);
+        const currentYear = new Date().getFullYear();
+        const age = yob ? currentYear - yob : null;
 
         // Validation
         if (!name) {
@@ -284,15 +284,16 @@ const AddChildHandlers = {
             return;
         }
 
-        if (!age || age < 5 || age > 17) {
-            NotificationManager.show('Please enter a valid age (5-17)', 'warning');
+        if (!yob || yob < 2007 || yob > 2021) {
+            NotificationManager.show('Please enter a valid year of birth (2007-2021)', 'warning');
             return;
         }
 
         // Create profile data
         const profileData = {
             name: name,
-            age: parseInt(age),
+            yearOfBirth: yob,
+            age: age,
             gender: selectedGender,
             avatar: uploadedAvatar || selectedAvatarUrl,
             template: selectedTemplate,

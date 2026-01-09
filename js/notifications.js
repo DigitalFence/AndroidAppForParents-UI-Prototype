@@ -1,6 +1,25 @@
 // ===================================
 // Notification System
 // ===================================
+// 
+// CURRENT SUPPORTED NOTIFICATION TYPES:
+// - App requests (child requests to download apps)
+// - Schedule alerts (bedtime, screen time limits)
+// - Family invites (join family, guardian requests)
+//
+// NOT YET SUPPORTED (Post-MVP):
+// - Real-time activity status ("Currently playing: Minecraft")
+// - Complex activity tracking
+// - Live game/app status notifications
+//
+// Future Enhancement Plan:
+// TODO: When backend supports live activity tracking:
+// - Add showLiveStatus(childName, activity, appName) method
+// - Add notification types: 'app-request', 'schedule', 'family-invite', 'live-status'
+// - Add priority levels for notification ordering
+// - Add persistence layer for notification history
+// ===================================
+
 const NotificationManager = {
     show: function (message) {
         // Create notification element

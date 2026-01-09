@@ -3,7 +3,15 @@ const SettingsHandlers = {
     // Account
     editProfile() {
         console.log('Edit profile clicked');
-        // TODO: Navigate to profile edit screen
+        ProfileEditModal.open();
+    },
+
+    // Helper function for phone validation
+    validatePhoneNumber(phoneNumber) {
+        // Remove all non-digits
+        const cleaned = phoneNumber.replace(/\D/g, '');
+        // Check if exactly 10 digits
+        return cleaned.length === 10;
     },
 
     changeEmail() {

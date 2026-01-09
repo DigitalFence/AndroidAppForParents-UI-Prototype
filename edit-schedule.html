@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Schedule - Parental Control</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/create-schedule.css">
+    <link rel="stylesheet" href="css/time-picker.css">
+    <link rel="stylesheet" href="components/buttons.css">
+</head>
+
+<body>
+    <div class="background-gradient"></div>
+
+    <div class="create-container">
+        <!-- Header -->
+        <header class="page-header">
+            <button class="back-button" onclick="CreateScheduleHandlers.goBack()">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="header-title">New Schedule</h1>
+            <button class="back-button delete-header-btn hidden" id="delete-btn"
+                onclick="CreateScheduleHandlers.deleteSchedule()" style="color: var(--color-error);">
+                <span class="material-symbols-outlined">delete</span>
+            </button>
+            <div style="width: 40px;" id="header-spacer"></div>
+        </header>
+
+        <main class="main-content">
+            <!-- Schedule Name -->
+            <div class="form-group">
+                <label class="form-label">Schedule Name</label>
+                <input type="text" id="schedule-name" class="form-input" placeholder="e.g., Homework Time, Gaming"
+                    oninput="CreateScheduleHandlers.validateForm()">
+            </div>
+
+            <!-- Schedule Type -->
+            <div class="form-group">
+                <label class="form-label">Schedule Type</label>
+                <div class="type-selector">
+                    <button class="type-card selected" onclick="CreateScheduleHandlers.selectType('downtime')"
+                        id="type-downtime">
+                        <div class="type-icon downtime">
+                            <span class="material-symbols-outlined">block</span>
+                        </div>
+                        <div class="type-info">
+                            <span class="type-title">Downtime</span>
+                            <span class="type-desc">Block specific apps</span>
+                        </div>
+                        <span class="material-symbols-outlined check-circle">check_circle</span>
+                    </button>
+
+                    <button class="type-card" onclick="CreateScheduleHandlers.selectType('bedtime')" id="type-bedtime">
+                        <div class="type-icon bedtime">
+                            <span class="material-symbols-outlined">bedtime</span>
+                        </div>
+                        <div class="type-info">
+                            <span class="type-title">Bedtime</span>
+                            <span class="type-desc">Block everything</span>
+                        </div>
+                        <span class="material-symbols-outlined check-circle">check_circle</span>
+                    </button>
+                </div>
+
+                <!-- App Configuration Button (Downtime Only) -->
+                <div id="downtime-config-section" class="hidden" style="margin-top: 16px;">
+                    <button class="btn btn-secondary btn-full" onclick="CreateScheduleHandlers.configureApps()"
+                        style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; font-weight: 600;">
+                        <span class="material-symbols-outlined">apps</span>
+                        Select Allowed Apps
+                    </button>
+                    <p class="helper-text"
+                        style="font-size: 11px; color: var(--color-text-tertiary); margin-top: 8px; text-align: center;">
+                        Choose which apps are available during downtime.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Days -->
+            <div class="form-group">
+                <div class="days-header">
+                    <label class="form-label">Days</label>
+                    <div class="quick-select">
+                        <button class="chip" onclick="CreateScheduleHandlers.selectDays('all')">All Days</button>
+                        <button class="chip" onclick="CreateScheduleHandlers.selectDays('weekdays')">Weekdays</button>
+                        <button class="chip" onclick="CreateScheduleHandlers.selectDays('weekends')">Weekends</button>
+                    </div>
+                </div>
+
+                <div class="days-grid">
+                    <button class="day-circle" data-day="Mon"
+                        onclick="CreateScheduleHandlers.toggleDay(this)">M</button>
+                    <button class="day-circle" data-day="Tue"
+                        onclick="CreateScheduleHandlers.toggleDay(this)">T</button>
+                    <button class="day-circle" data-day="Wed"
+                        onclick="CreateScheduleHandlers.toggleDay(this)">W</button>
+                    <button class="day-circle" data-day="Thu"
+                        onclick="CreateScheduleHandlers.toggleDay(this)">T</button>
+                    <button class="day-circle" data-day="Fri"
+                        onclick="CreateScheduleHandlers.toggleDay(this)">F</button>
+                    <button class="day-circle" data-day="Sat"
+                        onclick="CreateScheduleHandlers.toggleDay(this)">S</button>
+                    <button class="day-circle" data-day="Sun"
+                        onclick="CreateScheduleHandlers.toggleDay(this)">S</button>
+                </div>
+                <div class="days-summary" id="days-text">Select days above</div>
+            </div>
+
+            <!-- Time Range -->
+            <div class="form-group">
+                <label class="form-label">Time</label>
+                <div class="time-range-selector" onclick="TimePicker.open()">
+                    <div class="time-display-group">
+                        <span class="time-label">Start</span>
+                        <span class="time-value" id="start-display">09:00</span>
+                    </div>
+                    <div class="time-divider">
+                        <span class="material-symbols-outlined">arrow_forward</span>
+                    </div>
+                    <div class="time-display-group">
+                        <span class="time-label">End</span>
+                        <span class="time-value" id="end-display">17:00</span>
+                    </div>
+                    <input type="hidden" id="start-time" value="09:00">
+                    <input type="hidden" id="end-time" value="17:00">
+                </div>
+            </div>
+
+        </main>
+
+        <div class="action-footer">
+            <button class="btn btn-primary btn-large" id="save-btn" onclick="CreateScheduleHandlers.save()" disabled>
+                Create Schedule
+            </button>
+        </div>
+    </div>
+
+    <!-- Time Picker Modal (Reused) -->
+    <div id="time-picker-overlay" class="picker-overlay">
+        <div class="picker-backdrop" onclick="TimePicker.close()"></div>
+        <div class="picker-card">
+            <div class="drag-handle"></div>
+
+            <div class="picker-header">
+                <h3 class="picker-title">Set Time</h3>
+                <p class="picker-subtitle">Select start and end time</p>
+            </div>
+
+            <div class="picker-columns">
+                <!-- Start Time -->
+                <div class="time-column">
+                    <span class="column-label">Start</span>
+                    <div class="time-scroller-wrapper">
+                        <div class="time-scroller" id="start-time-scroller">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div class="scroller-highlight"></div>
+                    </div>
+                </div>
+
+                <span class="material-symbols-outlined picker-arrow">arrow_forward</span>
+
+                <!-- End Time -->
+                <div class="time-column">
+                    <span class="column-label">End</span>
+                    <div class="time-scroller-wrapper">
+                        <div class="time-scroller" id="end-time-scroller">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div class="scroller-highlight"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="picker-actions">
+                <button class="picker-btn btn-cancel" onclick="TimePicker.close()">Cancel</button>
+                <button class="picker-btn btn-save" onclick="TimePicker.save()">Set Time</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/edit-schedule.js"></script>
+</body>
+
+</html>

@@ -32,12 +32,64 @@ const ProfileHandlers = {
     },
 
     /**
+     * Validate phone number - must be exactly 10 digits
+     */
+    validatePhone(input) {
+        // Only allow digits
+        input.value = input.value.replace(/[^0-9]/g, '');
+
+        const phoneNumber = input.value;
+        const hintText = document.getElementById('phoneHint');
+        const submitBtn = document.querySelector('.btn-primary[type="submit"]');
+
+        // Reset
+        input.style.borderColor = '';
+        if (hintText) {
+            hintText.textContent = '';
+            hintText.style.color = '';
+        }
+
+        // If empty
+        if (phoneNumber.length === 0) {
+            if (submitBtn) submitBtn.disabled = false;
+            return;
+        }
+
+        // Validate: exactly 10 digits
+        if (phoneNumber.length === 10) {
+            // Valid - show ONLY this message
+            if (hintText) {
+                hintText.textContent = '✓ Valid phone number';
+                hintText.style.color = '#059669';
+            }
+            input.style.borderColor = '#6BCF7E';
+            if (submitBtn) submitBtn.disabled = false;
+        } else {
+            // Invalid - show nothing, just red border
+            input.style.borderColor = '#EF4444';
+            if (submitBtn) submitBtn.disabled = true;
+        }
+    },
+
+    /**
      * Submit profile form
      */
     submit: function (event) {
         event.preventDefault();
+
+        const phoneInput = document.getElementById('phoneNumber');
+        const phoneNumber = phoneInput ? phoneInput.value.replace(/\D/g, '') : '';
+
+        // Final validation - must be exactly 10 digits
+        if (!phoneNumber || phoneNumber.length !== 10) {
+            NotificationManager.show('Please enter a valid 10-digit phone number');
+            if (phoneInput) phoneInput.focus();
+            return;
+        }
+
         console.log('Profile form submitted');
         console.log('Selected role:', this.selectedRole);
+        console.log('Phone number:', phoneNumber);
 
         NotificationManager.show('Profile saved! Setting up your family...');
 
