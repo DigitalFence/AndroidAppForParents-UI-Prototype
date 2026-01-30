@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Rules - Parental Control</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/content-limits.css">
+    <link rel="stylesheet" href="css/website-rules.css">
+    <link rel="stylesheet" href="components/modal.css"> <!-- Assuming exists or I'll inline -->
+</head>
+
+<body>
+    <div class="background-gradient"></div>
+
+    <div class="limits-container rules-container">
+        <!-- Header -->
+        <header class="page-header">
+            <button class="back-button" onclick="location.href='content-limits.html'">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="header-title">Website Rules</h1>
+            <button class="header-add-btn" onclick="WebsiteRules.toggleAddModal()">
+                <span class="material-symbols-outlined">add</span>
+            </button>
+        </header>
+
+        <main class="main-content">
+            <!-- Safe Search -->
+            <div class="feature-toggle-card">
+                <div class="feature-info">
+                    <h3>Safe Search</h3>
+                    <p>Filter explicit content from results</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Blocked Domains -->
+            <div class="list-section-header">
+                <span>Blocked Domains (3)</span>
+            </div>
+            <div class="rules-list" id="blocked-sites-list">
+                <div class="rule-item blocked">
+                    <div class="item-icon">
+                        <span class="material-symbols-outlined">public_off</span>
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-name">facebook.com</h3>
+                        <p class="item-meta">Social Media</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" onchange="WebsiteRules.toggleSite('facebook.com')">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="rule-item blocked">
+                    <div class="item-icon">
+                        <span class="material-symbols-outlined">public_off</span>
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-name">tiktok.com</h3>
+                        <p class="item-meta">Social Media</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" onchange="WebsiteRules.toggleSite('tiktok.com')">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="rule-item blocked">
+                    <div class="item-icon">
+                        <span class="material-symbols-outlined">public_off</span>
+                    </div>
+                    <div class="item-details">
+                        <h3 class="item-name">reddit.com</h3>
+                        <p class="item-meta">Forums</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" onchange="WebsiteRules.toggleSite('reddit.com')">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Allowed Sites -->
+            <div class="list-section-header">
+                <span>Always Allowed (4)</span>
+            </div>
+            <div class="rules-list" id="allowed-sites-list">
+                <div class="rule-item">
+                    <div class="item-icon">W</div>
+                    <div class="item-details">
+                        <h3 class="item-name">wikipedia.org</h3>
+                        <p class="item-meta">Education</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked onchange="WebsiteRules.toggleSite('wikipedia.org')">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="rule-item">
+                    <div class="item-icon">K</div>
+                    <div class="item-details">
+                        <h3 class="item-name">khanacademy.org</h3>
+                        <p class="item-meta">Education</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked onchange="WebsiteRules.toggleSite('khanacademy.org')">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Rule Modal -->
+    <div id="add-rule-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Add Website Rule</h3>
+                <button class="close-btn" onclick="WebsiteRules.toggleAddModal()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Website URL</label>
+                    <input type="text" id="new-site-url" placeholder="e.g. twitter.com" class="text-input">
+                </div>
+                <div class="input-group">
+                    <label>Action</label>
+                    <div class="segment-control">
+                        <button class="segment active"
+                            onclick="this.parentElement.querySelectorAll('.segment').forEach(s=>s.classList.remove('active')); this.classList.add('active')">Block</button>
+                        <button class="segment"
+                            onclick="this.parentElement.querySelectorAll('.segment').forEach(s=>s.classList.remove('active')); this.classList.add('active')">Allow</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" onclick="WebsiteRules.toggleAddModal()">Cancel</button>
+                <button class="btn-primary" onclick="WebsiteRules.addRule()">Add Rule</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimal Modal CSS Inline for now if components/modal.css missing -->
+    <style>
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-card {
+            background: white;
+            width: 90%;
+            max-width: 320px;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+        }
+
+        .text-input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            outline: none;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-cancel,
+        .btn-primary {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-primary {
+            background: var(--color-primary, #667eea);
+            color: white;
+        }
+
+        .segment-control {
+            display: flex;
+            background: #f0f0f0;
+            padding: 4px;
+            border-radius: 12px;
+        }
+
+        .segment {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .segment.active {
+            background: white;
+            color: black;
+            shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+    <script src="js/website-rules.js"></script>
+    <script>
+        // Simple mock object if file is empty
+        const WebsiteRules = {
+            toggleAddModal: () => {
+                const el = document.getElementById('add-rule-modal');
+                el.style.display = el.style.display === 'none' ? 'flex' : 'none';
+            },
+            addRule: () => {
+                const url = document.getElementById('new-site-url').value;
+                if (url) {
+                    alert('Rule added for ' + url);
+                    document.getElementById('add-rule-modal').style.display = 'none';
+                    // logic to append to list
+                }
+            },
+            toggleSite: (url) => {
+                console.log('Toggled', url);
+                // logic to swap lists
+            }
+        };
+    </script>
+</body>
+
+</html>

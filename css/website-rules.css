@@ -1,0 +1,238 @@
+/* ===================================
+   Website Rules & YouTube Channels
+   =================================== */
+
+.rules-container {
+    min-height: 100vh;
+    padding-bottom: 80px;
+    /* Space for fab or bottom scroll */
+    max-width: 448px;
+    margin: 0 auto;
+}
+
+/* Main Content Padding */
+.main-part {
+    padding: 24px;
+}
+
+/* Feature Toggle Card (e.g. Safe Search, Block Shorts) */
+.feature-toggle-card {
+    background: white;
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+}
+
+.feature-info h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    color: var(--color-text-primary);
+}
+
+.feature-info p {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Section Header */
+.list-section-header {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    margin-top: 24px;
+    padding-left: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Item Lists */
+.rules-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.rule-item {
+    background: white;
+    border-radius: 16px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
+}
+
+.rule-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.rule-item.blocked {
+    background: #FAFAFA;
+}
+
+.rule-item.blocked .item-name {
+    text-decoration: none;
+    color: var(--color-text-secondary);
+}
+
+.rule-item.blocked .item-icon {
+    background: #FEF2F2;
+    color: #EF4444;
+    opacity: 1;
+}
+
+.item-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    /* Channels circle, Sites also usually circular favicon bg */
+    background: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.item-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 2px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-meta {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    margin: 0;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #E2E8F0;
+    transition: .3s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+input:checked+.slider {
+    background-color: var(--color-primary);
+}
+
+input:checked+.slider:before {
+    transform: translateX(20px);
+}
+
+/* Header Add Button */
+.header-add-btn {
+    color: var(--color-primary);
+    background: rgba(93, 138, 244, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.header-add-btn:hover {
+    background: rgba(93, 138, 244, 0.2);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 32px 0;
+    color: var(--color-text-tertiary);
+    font-size: 14px;
+}
+
+/* Standard Icon Button */
+.icon-button {
+    background: transparent;
+    border: none;
+    color: var(--color-primary);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.icon-button:hover {
+    background: rgba(93, 138, 244, 0.1);
+}
+
+.icon-button:active {
+    transform: scale(0.95);
+}

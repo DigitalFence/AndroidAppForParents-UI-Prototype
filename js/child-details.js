@@ -64,7 +64,7 @@ const ChildHandlers = {
         console.log('Manage limits clicked');
         // Navigate to app limits screen with child name
         const childName = getChildName();
-        window.location.href = `app-limits.html?child=${encodeURIComponent(childName)}`;
+        window.location.href = `content-limits.html?child=${encodeURIComponent(childName)}`;
     },
 
     manageSchedules() {
