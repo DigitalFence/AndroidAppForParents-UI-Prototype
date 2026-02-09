@@ -124,6 +124,18 @@
             <div class="apps-section">
                 <div class="section-header">
                     <h2>Activity Log</h2>
+                    <div class="header-actions">
+                        <div class="select-wrapper">
+                            <select class="category-select" onchange="MonitorHandlers.filterCategory(this.value)"
+                                aria-label="Filter by Category">
+                                <option value="all">All Categories</option>
+                                <option value="education">Education</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="gaming">Gaming</option>
+                            </select>
+                            <span class="material-symbols-outlined select-icon">expand_more</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Tab-like filters -->
@@ -142,9 +154,11 @@
                     <button class="sub-filter-chip" onclick="MonitorHandlers.filterSource('web')">Web</button>
                 </div>
 
+
+
                 <div class="stats-list" id="stats-list-container">
                     <!-- Apps -->
-                    <div class="stat-item app-type">
+                    <div class="stat-item app-type" data-category="education">
                         <div class="stat-icon-box app-color">
                             <span class="material-symbols-outlined">school</span>
                         </div>
@@ -156,7 +170,7 @@
                     </div>
 
                     <!-- YouTube (App) -->
-                    <div class="stat-item youtube-type" data-source="app">
+                    <div class="stat-item youtube-type" data-source="app" data-category="education">
                         <div class="stat-icon-box yt-color">
                             <span class="material-symbols-outlined">play_circle</span>
                         </div>
@@ -168,7 +182,7 @@
                     </div>
 
                     <!-- YouTube (Web) -->
-                    <div class="stat-item youtube-type" data-source="web">
+                    <div class="stat-item youtube-type" data-source="web" data-category="entertainment">
                         <div class="stat-icon-box yt-color">
                             <span class="material-symbols-outlined">public</span>
                         </div>
@@ -180,7 +194,7 @@
                     </div>
 
                     <!-- Web -->
-                    <div class="stat-item web-type">
+                    <div class="stat-item web-type" data-category="education">
                         <div class="stat-icon-box web-color">
                             <span class="material-symbols-outlined">public</span>
                         </div>
@@ -191,7 +205,7 @@
                         <div class="stat-time">15m</div>
                     </div>
 
-                    <div class="stat-item app-type">
+                    <div class="stat-item app-type" data-category="gaming">
                         <div class="stat-icon-box game-icon">
                             <span class="material-symbols-outlined">sports_esports</span>
                         </div>

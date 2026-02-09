@@ -147,8 +147,16 @@ const MonitorHandlers = {
         }
     },
 
+    filterState: {
+        tab: 'all',
+        source: 'all',
+        category: 'all'
+    },
+
     switchTab(tabName) {
-        // Update Tabs
+        this.filterState.tab = tabName;
+
+        // Update Tabs UI
         const buttons = document.querySelectorAll('.stats-tab');
         buttons.forEach(btn => {
             const txt = btn.textContent.toLowerCase();
@@ -159,80 +167,85 @@ const MonitorHandlers = {
             }
         });
 
-        // Show/Hide Sub-filters
+        // Show/Hide Sub-filters for YouTube
         const subFilters = document.getElementById('yt-source-filters');
         if (subFilters) {
             if (tabName === 'youtube') {
                 subFilters.classList.remove('hidden');
+                // Reset source filter to 'all' when entering YouTube tab
+                this.filterState.source = 'all';
+                this.updateSourceChips();
             } else {
                 subFilters.classList.add('hidden');
             }
         }
 
-        // Reset Source Filter UI to 'Both' when switching tabs, effectively showing all
-        if (tabName === 'youtube') {
-            this.filterSource('all');
-            // return; // NO RETURN, we want to filter types too if any logic exists below
-            // Actually my previous implementation had return. If I return, I need to make sure youtube item filter logic runs inside filterSource.
-            // filterSource checks class .youtube-type.
-            // But we also need to hide .app-type and .web-type!
-            // My previous filterSource ONLY touches .youtube-type. It does NOT hide .app-type.
-
-            // So I MUST NOT return early, I must proceed to hide non-youtube items.
-            // Wait, my previous `switchTab` logic filter loop was:
-            /*
-            const items = document.querySelectorAll('.stat-item');
-            items.forEach(item => { ... hides if not matching tab ... });
-            */
-            // If I return early, that loop doesn't run, so apps stay visible. 
-            // I should fix that logic flaw from previous step if relevant.
-        }
-
-        // Filter List (Normal Tabs)
-        const items = document.querySelectorAll('.stat-item');
-        items.forEach(item => {
-            if (tabName === 'all') {
-                item.classList.remove('hidden');
-            } else {
-                if (item.classList.contains(`${tabName}-type`)) {
-                    item.classList.remove('hidden');
-                    // If we just showed it, we might need to apply sub-filter again?
-                    // If tab is youtube, we just showed ALL youtube items.
-                    // But we called filterSource('all') above, so all youtube items should be shown.
-                    // Correct.
-                } else {
-                    item.classList.add('hidden');
-                }
-            }
-        });
+        this.applyFilters();
     },
 
     filterSource(source) {
-        // Update Chips matching the source
-        const chips = document.querySelectorAll('.sub-filter-chip');
+        this.filterState.source = source;
+        this.updateSourceChips();
+        this.applyFilters();
+    },
+
+    updateSourceChips() {
+        const chips = document.querySelectorAll('#yt-source-filters .sub-filter-chip');
         chips.forEach(chip => {
-            // Check text or logic. My HTML button for 'all' says "Both"
             const txt = chip.textContent.toLowerCase();
+            const source = this.filterState.source;
             if ((source === 'all' && txt === 'both') || txt === source) {
                 chip.classList.add('active');
             } else {
                 chip.classList.remove('active');
             }
         });
+    },
 
-        // Filter YouTube Items
-        // Start by ensuring all YT items are candidates (if we are in YT tab)
-        const items = document.querySelectorAll('.youtube-type');
+    filterCategory(category) {
+        this.filterState.category = category;
+        this.applyFilters();
+    },
+
+    applyFilters() {
+        const { tab, source, category } = this.filterState;
+        const items = document.querySelectorAll('.stat-item');
+
         items.forEach(item => {
-            const itemSource = item.getAttribute('data-source');
-            if (source === 'all') {
+            let isVisible = true;
+
+            // 1. Tab Filter
+            if (tab !== 'all') {
+                // Map tab names to classes if needed, or rely on convention
+                // Tab 'app' -> 'app-type'
+                // Tab 'youtube' -> 'youtube-type'
+                // Tab 'web' -> 'web-type'
+                if (!item.classList.contains(`${tab}-type`)) {
+                    isVisible = false;
+                }
+            }
+
+            // 2. Source Filter (Only applicable if we are filtering by YouTube tab)
+            // If tab is 'youtube', we respect the source filter.
+            if (isVisible && tab === 'youtube') {
+                const itemSource = item.getAttribute('data-source');
+                if (source !== 'all' && itemSource !== source) {
+                    isVisible = false;
+                }
+            }
+
+            // 3. Category Filter
+            if (isVisible && category !== 'all') {
+                const itemCategory = item.getAttribute('data-category');
+                if (itemCategory !== category) {
+                    isVisible = false;
+                }
+            }
+
+            if (isVisible) {
                 item.classList.remove('hidden');
             } else {
-                if (itemSource === source) {
-                    item.classList.remove('hidden');
-                } else {
-                    item.classList.add('hidden');
-                }
+                item.classList.add('hidden');
             }
         });
     },

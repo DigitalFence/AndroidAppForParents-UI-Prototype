@@ -792,3 +792,80 @@
 .weekly-section {
     animation-delay: 0.2s;
 }
+
+/* Header Filter Dropdown - Premium */
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
+.select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-surface);
+    padding: 6px 14px;
+    padding-right: 12px;
+    border-radius: 100px;
+    /* Pill shape */
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.dark .select-wrapper {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.select-wrapper:hover {
+    border-color: var(--color-primary);
+    background-color: rgba(93, 138, 244, 0.04);
+    box-shadow: 0 2px 8px rgba(93, 138, 244, 0.15);
+}
+
+.category-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    padding-right: 28px;
+    /* Space for icon */
+    text-align: left;
+    min-width: 100px;
+    /* Ensure click area */
+    position: relative;
+    z-index: 2;
+}
+
+.category-select::-ms-expand {
+    display: none;
+}
+
+.category-select:focus {
+    outline: none;
+}
+
+.select-icon {
+    position: absolute;
+    right: 0;
+    font-size: 20px;
+    pointer-events: none;
+    color: var(--color-text-tertiary);
+    transition: transform 0.2s, color 0.2s;
+    z-index: 1;
+}
+
+.select-wrapper:hover .select-icon {
+    color: var(--color-primary);
+    transform: rotate(180deg);
+}
+
+.select-wrapper:hover .category-select {
+    color: var(--color-primary);
+}
