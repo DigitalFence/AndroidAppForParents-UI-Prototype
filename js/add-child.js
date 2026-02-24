@@ -56,6 +56,66 @@ const AddChildHandlers = {
 
         // Auto-update template and avatars based on year of birth
         document.getElementById('child-yob').addEventListener('input', this.handleYOBChange);
+
+        // Check if editing a child
+        const urlParams = new URLSearchParams(window.location.search);
+        const mode = urlParams.get('mode');
+        const childName = urlParams.get('child');
+
+        if (mode === 'edit' && childName) {
+            this.setupEditMode(childName);
+        }
+    },
+
+    setupEditMode(childName) {
+        // Update UI Text
+        document.querySelector('.header-title').textContent = 'Edit Child Profile';
+        document.querySelector('.create-profile-btn span:first-child').textContent = 'Save Changes';
+
+        // Check Local Storage or mock defaults
+        const existingProfiles = JSON.parse(localStorage.getItem('childProfiles') || '[]');
+        let profile = existingProfiles.find(p => p.name.toLowerCase() === childName.toLowerCase());
+
+        // Default mock fallback if not in local storage
+        if (!profile) {
+            const currentYear = new Date().getFullYear();
+            if (childName === 'Leo') {
+                profile = { name: 'Leo', yearOfBirth: currentYear - 8, gender: 'boy', avatar: 'assets/child-leo.png', template: 'moderate' };
+            } else if (childName === 'Mia') {
+                profile = { name: 'Mia', yearOfBirth: currentYear - 12, gender: 'girl', avatar: 'assets/child-mia.png', template: 'moderate' };
+            }
+        }
+
+        if (profile) {
+            // Populate fields
+            document.getElementById('child-name').value = profile.name;
+            if (profile.yearOfBirth) {
+                document.getElementById('child-yob').value = profile.yearOfBirth;
+            }
+
+            // Populate avatar
+            if (profile.avatar) {
+                const avatarCircle = document.getElementById('avatar-circle');
+                avatarCircle.innerHTML = `<img src="${profile.avatar}" alt="Avatar">`;
+                selectedAvatarUrl = profile.avatar;
+            }
+
+            // Populate gender
+            if (profile.gender) {
+                const genderBtn = document.querySelector(`.gender-btn[data-gender="${profile.gender}"]`);
+                if (genderBtn) this.selectGender(genderBtn);
+            }
+
+            // Populate template
+            if (profile.template) {
+                const templateCard = document.querySelector(`.template-card[data-template="${profile.template}"]`);
+                if (templateCard) {
+                    // Temporarily mock Age processing if YOB is inputted to display template suggestions implicitly:
+                    this.handleYOBChange();
+                    this.toggleTemplate(profile.template, templateCard);
+                }
+            }
+        }
     },
 
     /**
@@ -289,6 +349,10 @@ const AddChildHandlers = {
             return;
         }
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const isEditMode = urlParams.get('mode') === 'edit';
+        const originalChildName = urlParams.get('child');
+
         // Create profile data
         const profileData = {
             name: name,
@@ -297,12 +361,27 @@ const AddChildHandlers = {
             gender: selectedGender,
             avatar: uploadedAvatar || selectedAvatarUrl,
             template: selectedTemplate,
-            createdAt: new Date().toISOString()
+            updatedAt: new Date().toISOString()
         };
 
         // Save to localStorage
-        const existingProfiles = JSON.parse(localStorage.getItem('childProfiles') || '[]');
-        existingProfiles.push(profileData);
+        let existingProfiles = JSON.parse(localStorage.getItem('childProfiles') || '[]');
+
+        if (isEditMode && originalChildName) {
+            const index = existingProfiles.findIndex(p => p.name.toLowerCase() === originalChildName.toLowerCase());
+            if (index !== -1) {
+                // Keep original creation date
+                profileData.createdAt = existingProfiles[index].createdAt || profileData.updatedAt;
+                existingProfiles[index] = profileData;
+            } else {
+                profileData.createdAt = profileData.updatedAt;
+                existingProfiles.push(profileData);
+            }
+        } else {
+            profileData.createdAt = profileData.updatedAt;
+            existingProfiles.push(profileData);
+        }
+
         localStorage.setItem('childProfiles', JSON.stringify(existingProfiles));
 
         // Show success and redirect
@@ -310,10 +389,16 @@ const AddChildHandlers = {
             ? `with ${selectedTemplate} template`
             : 'without a template (set up manually later)';
 
-        NotificationManager.show(`${name}'s profile created ${templateMsg}!`, 'success');
+        const actionWord = isEditMode ? 'updated' : 'created';
+
+        NotificationManager.show(`${name}'s profile ${actionWord} ${templateMsg}!`, 'success');
 
         setTimeout(() => {
-            window.location.href = 'parent-dashboard.html';
+            if (isEditMode) {
+                window.location.href = `child-details.html?child=${encodeURIComponent(name)}`;
+            } else {
+                window.location.href = 'parent-dashboard.html';
+            }
         }, 1500);
     }
 };

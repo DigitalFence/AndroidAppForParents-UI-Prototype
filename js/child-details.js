@@ -177,6 +177,12 @@ function loadChildData() {
     document.querySelector('.child-name-large').textContent = childName;
     document.querySelector('.device-info').textContent = `${data.device} • Age ${data.age}`;
 
+    // Update Edit Child Profile Button URL
+    const editBtn = document.getElementById('edit-child-profile-btn');
+    if (editBtn) {
+        editBtn.onclick = () => window.location.href = `add-child.html?mode=edit&child=${encodeURIComponent(childName)}`;
+    }
+
     // Update status
     const statusChip = document.querySelector('.status-chip');
     const statusRing = document.querySelector('.status-ring');
@@ -189,6 +195,33 @@ function loadChildData() {
         statusChip.classList.add('idle');
         statusChip.innerHTML = '<span class="idle-dot"></span><span>Idle</span>';
         statusRing.classList.remove('active');
+    }
+
+    // Update devices section title
+    const devicesTitle = document.getElementById('devices-section-title');
+    if (devicesTitle) {
+        devicesTitle.textContent = `${childName}'s Devices`;
+    }
+
+    // Populate child devices
+    const devicesList = document.getElementById('devices-list');
+    if (devicesList) {
+        const deviceIconStr = (data.device || '').toLowerCase();
+        const iconName = deviceIconStr.includes('ipad') || deviceIconStr.includes('tablet') ? 'tablet_mac' : 'phone_iphone';
+        const deviceStatusText = data.status === 'active' ? 'Active Now' : 'Idle';
+
+        devicesList.innerHTML = `
+            <div class="device-item ${data.status}">
+                <div class="device-icon">
+                    <span class="material-symbols-outlined">${iconName}</span>
+                </div>
+                <div class="device-info">
+                    <span class="device-name">${data.device}</span>
+                    <span class="device-status ${data.status === 'active' ? 'active' : ''}">${deviceStatusText}</span>
+                </div>
+                <div class="device-indicator ${data.status === 'active' ? 'active' : ''}"></div>
+            </div>
+        `;
     }
 
     // Update schedule alert
