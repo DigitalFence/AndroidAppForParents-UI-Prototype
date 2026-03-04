@@ -55,8 +55,11 @@ const ChildHandlers = {
     // Lend My Device
     lendDevice() {
         console.log('Lend device clicked');
-        // TODO: Show modal with time options (30min, 1hr, 2hr, custom)
-        NotificationManager.show('Lend Device feature coming soon!', 'info');
+        if (window.QuickLendHandlers) {
+            QuickLendHandlers.openModal();
+        } else {
+            NotificationManager.show('Lend Device feature loading...', 'info');
+        }
     },
 
     // Screen Time

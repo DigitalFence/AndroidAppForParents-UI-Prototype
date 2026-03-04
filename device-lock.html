@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lock Screen - Digital Fence</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Modular CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/profile-auth.css">
+</head>
+
+<body class="lock-screen-body">
+    <!-- Dynamic background matching phone wallpaper style -->
+    <div class="lock-screen-bg"></div>
+
+    <div class="lock-screen-container">
+        <!-- Status Bar Mock -->
+        <div class="status-bar">
+            <span>Verizon</span>
+            <div class="status-icons">
+                <span class="material-symbols-outlined">signal_cellular_4_bar</span>
+                <span class="material-symbols-outlined">wifi</span>
+                <span class="material-symbols-outlined">battery_full</span>
+            </div>
+        </div>
+
+        <!-- Lock icon -->
+        <div class="lock-icon-container">
+            <span class="material-symbols-outlined">lock</span>
+        </div>
+
+        <!-- Time and Date -->
+        <div class="time-container">
+            <h1 class="lock-time" id="lockTime">09:41</h1>
+            <p class="lock-date" id="lockDate">Wednesday, October 11</p>
+        </div>
+
+        <!-- Notifications Mock -->
+        <div class="lock-notifications">
+            <!-- Mock Notification -->
+            <div class="mock-notification">
+                <div class="notif-header">
+                    <img src="assets/app-logo.png" alt="App" class="notif-icon"
+                        style="border-radius:6px;width:20px;height:20px;">
+                    <span class="notif-app">Digital Fence</span>
+                    <span class="notif-time">Now</span>
+                </div>
+                <div class="notif-body">
+                    <strong>Screen time updated</strong>
+                    <p>New limits have been applied to this device.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unlock Action Area -->
+        <div class="unlock-action-area" onclick="window.location.href='profile-recognition.html'">
+            <div class="swipe-indicator">
+                <span class="material-symbols-outlined bounce">keyboard_arrow_up</span>
+            </div>
+            <p class="swipe-text">Swipe up to unlock device</p>
+            <div class="home-indicator"></div>
+        </div>
+    </div>
+
+    <script src="js/profile-auth.js"></script>
+    <script>
+        // Set current time for realism
+        function updateLockTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+
+            document.getElementById('lockTime').textContent = hours + ':' + minutes;
+
+            const options = { weekday: 'long', month: 'long', day: 'numeric' };
+            document.getElementById('lockDate').textContent = now.toLocaleDateString('en-US', options);
+        }
+        updateLockTime();
+        setInterval(updateLockTime, 10000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Passcode - Digital Fence</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Modular CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/profile-auth.css">
+</head>
+
+<body class="auth-body">
+    <!-- Abstract gradient background for premium feel -->
+    <div class="auth-background blurred">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+    </div>
+
+    <!-- Header / Back button -->
+    <div class="auth-top-nav">
+        <button class="btn-back-auth" onclick="window.location.href='profile-recognition.html'">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+    </div>
+
+    <div class="auth-container passcode-layout">
+        <div class="passcode-header">
+            <div class="profile-icons-preview">
+                <!-- Mini decorative avatars -->
+                <img src="assets/father-avatar.png" class="mini-avatar a1" alt="">
+                <img src="assets/child-leo.png" class="mini-avatar a2" alt="">
+            </div>
+            <h2>Enter Passcode</h2>
+            <p>Your PIN determines which profile is unlocked.</p>
+        </div>
+
+        <div class="passcode-area">
+            <!-- PIN dots indicator -->
+            <div class="pin-dots" id="pinDots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <!-- PIN Pad -->
+            <div class="pin-pad">
+                <div class="pin-row">
+                    <button class="pin-btn" onclick="ProfileAuthHandlers.pressKey(1)">1</button>
+                    <button class="pin-btn" onclick="ProfileAuthHandlers.pressKey(2)">2</button>
+                    <button class="pin-btn" onclick="ProfileAuthHandlers.pressKey(3)">3</button>
+                </div>
+                <div class="pin-row">
+                    <button class="pin-btn" onclick="ProfileAuthHandlers.pressKey(4)">4</button>
+                    <button class="pin-btn" onclick="ProfileAuthHandlers.pressKey(5)">5</button>
+                    <button class="pin-btn" onclick="ProfileAuthHandlers.pressKey(6)">6</button>
+                </div>
+                <div class="pin-row">
+                    <button class="pin-btn" onclick="ProfileAuthHandlers.pressKey(7)">7</button>
+                    <button class="pin-btn" onclick="ProfileAuthHandlers.pressKey(8)">8</button>
+                    <button class="pin-btn" onclick="ProfileAuthHandlers.pressKey(9)">9</button>
+                </div>
+                <div class="pin-row">
+                    <button class="pin-btn empty"></button>
+                    <button class="pin-btn" onclick="ProfileAuthHandlers.pressKey(0)">0</button>
+                    <button class="pin-btn action-key" onclick="ProfileAuthHandlers.deleteKey()">
+                        <span class="material-symbols-outlined">backspace</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-actions">
+        </div>
+    </div>
+
+    <!-- Hidden Success overlay -->
+    <div id="passcodeSuccessOverlay" class="success-overlay" style="display: none;">
+        <div class="identified-state">
+            <div class="identified-avatar">
+                <img src="" alt="Profile" id="passcodeRecognizedAvatar">
+            </div>
+            <h3>Welcome, <span id="passcodeRecognizedName">User</span></h3>
+            <p>Switching profile...</p>
+            <div class="loading-dots">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/profile-auth.js"></script>
+</body>
+
+</html>

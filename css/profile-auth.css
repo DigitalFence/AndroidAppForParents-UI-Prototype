@@ -1,0 +1,874 @@
+/* ===================================
+   Profile Auth & Recognition Flow CSS
+   =================================== */
+
+html {
+    background-color: #0c1017;
+    /* Dark framing for desktop viewing */
+}
+
+/* Globals for auth pages */
+.auth-body {
+    margin: 0 auto;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: white;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    max-width: 448px;
+    background-color: #0F172A;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+}
+
+/* Abstract Backgrounds */
+.auth-background {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    background: #0F172A;
+    /* Slate 900 */
+}
+
+.auth-background.blurred {
+    filter: blur(20px);
+}
+
+.gradient-sphere {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: drift 20s infinite alternate ease-in-out;
+}
+
+.sphere-1 {
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, #5D8AF4, #4276F0);
+    top: -10vw;
+    right: -10vw;
+}
+
+.sphere-2 {
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, #8BA88E, #1F2E23);
+    bottom: -20vw;
+    left: -10vw;
+    animation-delay: -10s;
+}
+
+@keyframes drift {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate(-50px, 50px) scale(1.1);
+    }
+}
+
+/* Container Structure */
+.auth-container {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 60px 24px 40px;
+    box-sizing: border-box;
+}
+
+.auth-container.passcode-layout {
+    justify-content: flex-start;
+    padding-top: 40px;
+}
+
+/* Top Nav (Passcode screen) */
+.auth-top-nav {
+    position: absolute;
+    top: 40px;
+    left: 24px;
+    z-index: 20;
+}
+
+.btn-back-auth {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s;
+}
+
+.btn-back-auth:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Branding */
+.app-branding {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    animation: fadeInDown 0.8s ease-out forwards;
+}
+
+.app-logo-cube {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.app-logo-cube .material-symbols-outlined {
+    font-size: 32px;
+    color: white;
+}
+
+.app-branding h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.5px;
+    color: white;
+}
+
+/* Face Scanner Mock */
+.recognition-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+    width: 100%;
+}
+
+.face-scanner-mock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 1s ease-out 0.3s both;
+}
+
+.scanner-frame {
+    width: 140px;
+    height: 140px;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.face-icon {
+    font-size: 64px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--color-primary);
+    box-shadow: 0 0 16px var(--color-primary);
+    animation: scan 2s infinite ease-in-out;
+}
+
+@keyframes scan {
+    0% {
+        top: 0;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+.scan-status {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+
+.scan-subtext {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+}
+
+/* Success / Identified State */
+.identified-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: zoomIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.identified-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(135deg, #7DA3F6, #4276F0);
+    margin-bottom: 24px;
+    box-shadow: 0 12px 32px rgba(66, 118, 240, 0.4);
+}
+
+.identified-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    background: white;
+}
+
+.identified-state h3 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+}
+
+.identified-state p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 24px 0;
+}
+
+.profile-confirm-actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 260px;
+    gap: 12px;
+    margin-top: 16px;
+    animation: fadeInUp 0.5s ease-out 0.2s both;
+}
+
+.btn-confirm {
+    background: linear-gradient(135deg, var(--color-primary-light, #7DA3F6), var(--color-primary-dark, #4276F0));
+    color: white;
+    border: none;
+    padding: 18px 36px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(93, 138, 244, 0.35);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-confirm::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+    pointer-events: none;
+}
+
+.btn-confirm:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 36px rgba(93, 138, 244, 0.45);
+    filter: brightness(1.1);
+}
+
+.btn-confirm:active {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(93, 138, 244, 0.3);
+}
+
+.btn-confirm .spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.btn-switch {
+    background: rgba(255, 255, 255, 0.05);
+    /* Soft glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 16px 36px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-switch:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-switch:active {
+    transform: translateY(0);
+}
+
+/* Loading Dots */
+.loading-dots {
+    display: flex;
+    gap: 6px;
+}
+
+.loading-dots span {
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes pulse {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Actions area */
+.auth-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+    animation: fadeInUp 0.8s ease-out 0.5s both;
+}
+
+.btn-fallback {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 16px 32px;
+    border-radius: 28px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-fallback:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.auth-help-text {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+}
+
+/* ===================================
+   Passcode Screen Specifics
+   =================================== */
+
+.passcode-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 100%;
+    animation: fadeInDown 0.6s ease-out forwards;
+}
+
+.profile-icons-preview {
+    display: flex;
+    position: relative;
+    height: 48px;
+    margin-bottom: 16px;
+}
+
+.mini-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 3px solid #0F172A;
+    /* Match bg to fake transparency */
+    position: absolute;
+}
+
+.mini-avatar.a1 {
+    left: -36px;
+    z-index: 2;
+}
+
+.mini-avatar.a2 {
+    left: -12px;
+    z-index: 1;
+}
+
+.passcode-header h2 {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+}
+
+.passcode-header p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+}
+
+.passcode-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 320px;
+    animation: fadeIn 0.8s ease-out 0.2s both;
+}
+
+/* Dots */
+.pin-dots {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 48px;
+}
+
+.pin-dots .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.2s;
+}
+
+.pin-dots .dot.filled {
+    background: white;
+    border-color: white;
+    transform: scale(1.1);
+}
+
+.pin-dots.error .dot {
+    animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+    border-color: #EF4444;
+    /* red */
+}
+
+.pin-dots.error .dot.filled {
+    background: #EF4444;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-2px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(4px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-8px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(8px, 0, 0);
+    }
+}
+
+/* Number Pad */
+.pin-pad {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.pin-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.pin-btn {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pin-btn.empty {
+    background: transparent;
+    border: none;
+    cursor: default;
+}
+
+.pin-btn:not(.empty):hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+.pin-btn:not(.empty):active {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(0.95);
+}
+
+.pin-btn.action-key {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+}
+
+/* Mockup hint */
+.mockup-hint {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px;
+    border-radius: 12px;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.mockup-hint p {
+    margin: 4px 0;
+}
+
+.mockup-hint code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: white;
+}
+
+/* Full screen success overlay for PIN */
+.success-overlay {
+    position: fixed;
+    inset: 0;
+    background: #0F172A;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    /* toggled via JS */
+}
+
+/* ===================================
+   Lock Screen Mockup Styles
+   =================================== */
+
+.lock-screen-body {
+    margin: 0 auto;
+    padding: 0;
+    height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: white;
+    overflow: hidden;
+    position: relative;
+    max-width: 448px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+    background-color: #000;
+}
+
+.lock-screen-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format&fit=crop');
+    /* Aesthetic placeholder */
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+    filter: brightness(0.7);
+}
+
+.lock-screen-container {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.status-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.status-icons {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.status-icons span {
+    font-size: 18px;
+}
+
+.lock-icon-container {
+    margin-top: 10px;
+    animation: unlockBounce 2s infinite ease-in-out;
+}
+
+@keyframes unlockBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+.time-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.lock-time {
+    font-size: 80px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.lock-date {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 10px 0 0 0;
+}
+
+.lock-notifications {
+    flex: 1;
+    width: 100%;
+    max-width: 360px;
+    margin-top: 40px;
+}
+
+.mock-notification {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 16px;
+    color: #111;
+}
+
+.notif-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.notif-app {
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.notif-time {
+    margin-left: auto;
+    opacity: 0.6;
+}
+
+.notif-body strong {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.notif-body p {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.unlock-action-area {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+    cursor: pointer;
+}
+
+.swipe-indicator {
+    margin-bottom: 4px;
+}
+
+.swipe-indicator .bounce {
+    animation: swipeBounce 1.5s infinite;
+    opacity: 0.8;
+}
+
+@keyframes swipeBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+}
+
+.swipe-text {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+}
+
+.home-indicator {
+    width: 130px;
+    height: 5px;
+    background: white;
+    border-radius: 10px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

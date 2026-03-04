@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recognizing User - Digital Fence</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Modular CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/profile-auth.css">
+</head>
+
+<body class="auth-body">
+    <!-- Abstract gradient background for premium feel -->
+    <div class="auth-background">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+    </div>
+
+    <div class="auth-container">
+
+        <div class="app-branding">
+            <div class="app-logo-cube">
+                <img src="assets/app-logo.png" alt="Digital Fence Logo"
+                    style="width: 100%; height: 100%; object-fit: contain; border-radius: inherit;">
+            </div>
+            <h2>Digital Fence</h2>
+        </div>
+
+        <div class="recognition-area">
+            <!-- Face ID Animation Mockup -->
+            <div class="face-scanner-mock">
+                <div class="scanner-frame">
+                    <span class="material-symbols-outlined face-icon">face</span>
+                    <div class="scan-line"></div>
+                </div>
+                <!-- This message updates dynamically -->
+                <h3 class="scan-status" id="scanStatus">Scanning face...</h3>
+                <p class="scan-subtext" id="scanSubtext">Identifying active profile</p>
+            </div>
+
+            <!-- A hidden success state that displays when identified -->
+            <div class="identified-state" id="identifiedState" style="display: none;">
+                <div class="identified-avatar">
+                    <img src="assets/father-avatar.png" alt="Profile" id="recognizedAvatar">
+                </div>
+                <h3>Welcome back, <span id="recognizedName">Parth</span></h3>
+                <p>Is this you?</p>
+
+                <div class="profile-confirm-actions">
+                    <button class="btn-confirm" id="btnConfirmProfile" onclick="ProfileAuthHandlers.confirmProfile()">
+                        Continue as Parth
+                    </button>
+                    <button class="btn-switch" onclick="window.location.href='profile-passcode.html'">
+                        Switch Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-actions">
+            <!-- Fallback button -->
+            <button class="btn-fallback" onclick="window.location.href='profile-passcode.html'">
+                <span class="material-symbols-outlined">dialpad</span>
+                Use Passcode
+            </button>
+            <p class="auth-help-text">Face not recognized?</p>
+        </div>
+    </div>
+
+    <script src="js/profile-auth.js"></script>
+    <script>
+        // Simulate scanning flow on load
+        document.addEventListener('DOMContentLoaded', () => {
+            ProfileAuthHandlers.simulateFaceScan();
+        });
+    </script>
+</body>
+
+</html>
