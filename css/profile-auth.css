@@ -34,7 +34,9 @@ html {
 }
 
 .auth-background.blurred {
-    filter: blur(20px);
+    /* Container blur removed to prevent edge bleed */
+    transform: scale(1.1);
+    /* Prevent blurred edges from leaking a dark border */
 }
 
 .gradient-sphere {
@@ -824,6 +826,263 @@ html {
     height: 5px;
     background: white;
     border-radius: 10px;
+}
+
+/* ===================================
+   Home Screen Mockup Styles
+   =================================== */
+
+.home-app-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px 16px;
+    width: 100%;
+    padding: 20px 10px;
+    margin-top: 40px;
+    animation: zoomIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.mock-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.mock-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s;
+}
+
+.mock-icon.df-icon {
+    background: white;
+    padding: 2px;
+}
+
+.mock-icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: contain;
+}
+
+.mock-icon .material-symbols-outlined {
+    font-size: 32px;
+    color: white;
+}
+
+.mock-label {
+    font-size: 12px;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.home-dock {
+    position: absolute;
+    bottom: 24px;
+    left: 16px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 28px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.home-dock .mock-app .mock-label {
+    display: none;
+}
+
+@keyframes pulse-app {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* ===================================
+   App Launch Options Styles
+   =================================== */
+
+.launch-option-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: left;
+    color: white;
+    gap: 16px;
+}
+
+.launch-option-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.launch-option-btn .opt-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.launch-option-btn .opt-icon .material-symbols-outlined {
+    font-size: 24px;
+}
+
+.launch-option-btn .opt-text {
+    flex: 1;
+}
+
+.launch-option-btn .opt-text h3 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.launch-option-btn .opt-text p {
+    margin: 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.launch-option-btn .chevron {
+    color: rgba(255, 255, 255, 0.3);
+    transition: transform 0.2s;
+}
+
+.launch-option-btn:hover .chevron {
+    transform: translateX(4px);
+    color: white;
+}
+
+/* ===================================
+   Pattern Lock Grid Styles
+   =================================== */
+
+.pattern-area {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    margin: 20px auto;
+    animation: fadeIn 0.8s ease-out 0.2s both;
+}
+
+.pattern-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+    /* Crucial so lines don't block the grid nodes under them */
+}
+
+.pattern-lines stroke {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.pattern-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    z-index: 2;
+}
+
+.pattern-node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    touch-action: none;
+}
+
+.pattern-node .node-inner {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    transition: all 0.2s;
+    position: relative;
+    pointer-events: none;
+    /* Crucial so elementFromPoint registers the parent node, not the dot */
+}
+
+.pattern-node.active .node-inner {
+    background: white;
+    transform: scale(1.5);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+.pattern-node.active .node-inner::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    right: -12px;
+    bottom: -12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: pulse-ring 0.4s ease-out forwards;
+}
+
+.pattern-node.error .node-inner {
+    background: #EF4444;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.8);
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
 }
 
 /* Animations */

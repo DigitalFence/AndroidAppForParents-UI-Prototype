@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern Lock - Digital Fence</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Modular CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/profile-auth.css">
+</head>
+
+<body class="auth-body" style="user-select: none; -webkit-user-select: none;">
+    <!-- Abstract gradient background for premium feel -->
+    <div class="auth-background blurred">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+    </div>
+
+    <!-- Header / Back button -->
+    <div class="auth-top-nav">
+        <button class="btn-back-auth" onclick="window.location.href='app-launch.html'">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+    </div>
+
+    <div class="auth-container passcode-layout">
+        <div class="passcode-header" style="margin-top: 20px;">
+            <div class="profile-icons-preview">
+                <!-- Mini decorative avatars -->
+                <img src="assets/father-avatar.png" class="mini-avatar a1" alt="">
+                <img src="assets/child-leo.png" class="mini-avatar a2" alt="">
+            </div>
+            <h2>Draw Pattern</h2>
+            <p id="patternFeedback">Draw your pattern to unlock.</p>
+        </div>
+
+        <div class="pattern-area">
+            <!-- SVG layer for lines -->
+            <svg id="patternLines" class="pattern-lines">
+                <!-- Dynamic lines will go here -->
+            </svg>
+
+            <div class="pattern-grid" id="patternGrid">
+                <!-- 3x3 Grid Dots -->
+                <div class="pattern-node" data-id="1">
+                    <div class="node-inner"></div>
+                </div>
+                <div class="pattern-node" data-id="2">
+                    <div class="node-inner"></div>
+                </div>
+                <div class="pattern-node" data-id="3">
+                    <div class="node-inner"></div>
+                </div>
+                <div class="pattern-node" data-id="4">
+                    <div class="node-inner"></div>
+                </div>
+                <div class="pattern-node" data-id="5">
+                    <div class="node-inner"></div>
+                </div>
+                <div class="pattern-node" data-id="6">
+                    <div class="node-inner"></div>
+                </div>
+                <div class="pattern-node" data-id="7">
+                    <div class="node-inner"></div>
+                </div>
+                <div class="pattern-node" data-id="8">
+                    <div class="node-inner"></div>
+                </div>
+                <div class="pattern-node" data-id="9">
+                    <div class="node-inner"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-actions">
+        </div>
+    </div>
+
+    <!-- Hidden Success overlay -->
+    <div id="patternSuccessOverlay" class="success-overlay" style="display: none;">
+        <div class="identified-state">
+            <div class="identified-avatar">
+                <img src="" alt="Profile" id="patternRecognizedAvatar">
+            </div>
+            <h3>Welcome, <span id="patternRecognizedName">User</span></h3>
+            <p>Switching profile...</p>
+            <div class="loading-dots">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/profile-auth.js"></script>
+    <script>
+        // Init the pattern logic specific to this page
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof ProfileAuthHandlers !== 'undefined' && ProfileAuthHandlers.initPatternLock) {
+                ProfileAuthHandlers.initPatternLock();
+            }
+        });
+    </script>
+</body>
+
+</html>

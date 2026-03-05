@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Screen Mockup</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Modular CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/profile-auth.css">
+</head>
+
+<body class="lock-screen-body">
+    <!-- Abstract wallpaper background -->
+    <div class="lock-screen-bg" style="filter: brightness(0.85);"></div>
+
+    <div class="lock-screen-container" style="justify-content: flex-start; padding-top: 50px;">
+        <!-- Simple Status Bar Mock -->
+        <div class="status-bar" style="position: absolute; top: 16px; left: 24px; right: 24px; width: auto;">
+            <span id="homeTime">09:41</span>
+            <div class="status-icons">
+                <span class="material-symbols-outlined" style="font-size: 16px;">signal_cellular_4_bar</span>
+                <span class="material-symbols-outlined" style="font-size: 16px;">wifi</span>
+                <span class="material-symbols-outlined" style="font-size: 16px;">battery_full</span>
+            </div>
+        </div>
+
+        <!-- Search Widget Mockup -->
+        <div class="home-search-widget" style="width: 100%; padding: 0 20px; margin-top: 50px;">
+            <div
+                style="background: rgba(255,255,255,0.95); border-radius: 30px; height: 48px; display: flex; align-items: center; padding: 0 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                <span
+                    style="color: #4285F4; font-weight: 800; font-size: 18px; margin-right: 12px; font-family: sans-serif;">G</span>
+                <span style="color: #666; font-size: 15px; flex: 1;">Search...</span>
+                <span class="material-symbols-outlined"
+                    style="color: #4285F4; font-size: 20px; margin-right: 12px;">mic</span>
+                <span class="material-symbols-outlined"
+                    style="color: #4285F4; font-size: 20px;">center_focus_strong</span>
+            </div>
+        </div>
+
+        <!-- App Grid -->
+        <div class="home-app-grid" style="margin-top: 20px;">
+            <!-- Mock Apps -->
+            <div class="mock-app">
+                <div class="mock-icon" style="background: #EAB308"><span class="material-symbols-outlined">mail</span>
+                </div>
+                <span class="mock-label">Mail</span>
+            </div>
+            <div class="mock-app">
+                <div class="mock-icon" style="background: #3B82F6"><span
+                        class="material-symbols-outlined">photo_camera</span></div>
+                <span class="mock-label">Camera</span>
+            </div>
+            <div class="mock-app">
+                <div class="mock-icon" style="background: #10B981"><span class="material-symbols-outlined">chat</span>
+                </div>
+                <span class="mock-label">Messages</span>
+            </div>
+
+            <!-- Digital Fence App -->
+            <div class="mock-app" onclick="window.location.href='app-launch.html'"
+                style="cursor: pointer; animation: pulse-app 2s infinite;">
+                <div class="mock-icon df-icon">
+                    <img src="assets/app-logo.png" alt="Digital Fence">
+                </div>
+                <span class="mock-label" style="font-weight: 700;">Digital Fence</span>
+            </div>
+
+            <div class="mock-app">
+                <div class="mock-icon" style="background: #EF4444"><span
+                        class="material-symbols-outlined">music_note</span></div>
+                <span class="mock-label">Music</span>
+            </div>
+            <div class="mock-app">
+                <div class="mock-icon" style="background: #8B5CF6"><span class="material-symbols-outlined">map</span>
+                </div>
+                <span class="mock-label">Maps</span>
+            </div>
+        </div>
+
+        <!-- Dock -->
+        <div class="home-dock">
+            <div class="mock-app">
+                <div class="mock-icon"><span class="material-symbols-outlined">call</span></div>
+            </div>
+            <div class="mock-app">
+                <div class="mock-icon"><span class="material-symbols-outlined">public</span></div>
+            </div>
+            <div class="mock-app">
+                <div class="mock-icon"><span class="material-symbols-outlined">forum</span></div>
+            </div>
+            <div class="mock-app">
+                <div class="mock-icon"><span class="material-symbols-outlined">settings</span></div>
+            </div>
+        </div>
+
+        <div class="home-indicator" style="position: absolute; bottom: 8px;"></div>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('homeTime').textContent = hours + ':' + minutes;
+        }
+        updateTime();
+        setInterval(updateTime, 10000);
+    </script>
+</body>
+
+</html>

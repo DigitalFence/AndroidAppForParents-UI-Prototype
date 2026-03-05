@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launch Digital Fence</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet">
+
+    <!-- Modular CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/profile-auth.css">
+</head>
+
+<body class="auth-body">
+    <!-- Abstract gradient background for premium feel -->
+    <div class="auth-background blurred">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+    </div>
+
+    <!-- Header / Back button -->
+    <div class="auth-top-nav">
+        <button class="btn-back-auth" onclick="window.location.href='home-screen.html'">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+    </div>
+
+    <div class="auth-container">
+
+        <div class="app-branding" style="margin-top: 40px;">
+            <div class="app-logo-cube" style="width: 80px; height: 80px; border-radius: 24px;">
+                <img src="assets/app-logo.png" alt="Digital Fence Logo"
+                    style="width: 100%; height: 100%; object-fit: contain; border-radius: inherit;">
+            </div>
+            <h2 style="font-size: 28px;">Digital Fence</h2>
+            <p style="color: rgba(255,255,255,0.7); text-align: center; margin: 0; font-size: 15px;">Choose your primary
+                method to unlock the app and switch profiles.</p>
+        </div>
+
+        <div class="launch-options"
+            style="display: flex; flex-direction: column; width: 100%; gap: 16px; margin-bottom: 20px;">
+            <!-- Option 1: Pattern Lock -->
+            <button class="launch-option-btn card-style" onclick="window.location.href='profile-pattern.html'">
+                <div class="opt-icon" style="background: rgba(93, 138, 244, 0.2); color: #7DA3F6;">
+                    <span class="material-symbols-outlined">gesture</span>
+                </div>
+                <div class="opt-text">
+                    <h3>Pattern Lock</h3>
+                    <p>Draw pattern to unlock</p>
+                </div>
+                <span class="material-symbols-outlined chevron">chevron_right</span>
+            </button>
+
+            <!-- Option 2: Face ID -->
+            <button class="launch-option-btn card-style" onclick="window.location.href='profile-recognition.html'">
+                <div class="opt-icon" style="background: rgba(16, 185, 129, 0.2); color: #10B981;">
+                    <span class="material-symbols-outlined">face</span>
+                </div>
+                <div class="opt-text">
+                    <h3>Face Recognition</h3>
+                    <p>Use biometrics to unlock</p>
+                </div>
+                <span class="material-symbols-outlined chevron">chevron_right</span>
+            </button>
+
+            <!-- Option 3: Passcode -->
+            <button class="launch-option-btn card-style" onclick="window.location.href='profile-passcode.html'">
+                <div class="opt-icon" style="background: rgba(139, 92, 246, 0.2); color: #A78BFA;">
+                    <span class="material-symbols-outlined">dialpad</span>
+                </div>
+                <div class="opt-text">
+                    <h3>Passcode</h3>
+                    <p>Enter 4-digit PIN</p>
+                </div>
+                <span class="material-symbols-outlined chevron">chevron_right</span>
+            </button>
+        </div>
+
+    </div>
+
+    <script src="js/profile-auth.js"></script>
+</body>
+
+</html>
